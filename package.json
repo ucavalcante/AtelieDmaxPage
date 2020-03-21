@@ -1,0 +1,23 @@
+{
+  "name": "ateliedmaxpage",
+  "version": "0.0.2",
+  "description": "A portiflio page for github pages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ucavalcante/AtelieDmaxPage.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ucavalcante/AtelieDmaxPage/issues"
+  },
+  "homepage": "https://github.com/ucavalcante/AtelieDmaxPage#readme",
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "foundation-sites": "^6.6.1"
+  }
+}

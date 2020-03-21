@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 ## [Unreleased]
 - Portifolio page for atelie Dmax
 ---
+## [0.0.3] - 2020-03-20
+### Added
+- content description
+### Changed
+- product categories layout
+
 ## [0.0.2] - 2020-03-18
 ### Added
 - add basic content
