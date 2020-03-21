@@ -1,20 +1,25 @@
-.icon{
+.icon {
     height: 3rem;
 }
-.icon-sm{
+
+.icon-sm {
     height: 2rem;
 }
-.icon-xs{
+
+.icon-xs {
     height: 1rem;
 }
-.icon-lg{
+
+.icon-lg {
     height: 5rem;
 }
-.card{
-width: 15rem;
-border-style: solid;
-border-color: #cf94c1;
+
+.card {
+    width: 15rem;
+    border-style: solid;
+    border-color: #cf94c1;
 }
-.card-divider{
-text-align: center;
+
+.card-divider {
+    text-align: center;
 }
