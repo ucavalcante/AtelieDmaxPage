@@ -10,3 +10,11 @@
 .icon-lg{
     height: 5rem;
 }
+.card{
+width: 15rem;
+border-style: solid;
+border-color: #cf94c1;
+}
+.card-divider{
+text-align: center;
+}
