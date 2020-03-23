@@ -1,25 +1,9 @@
-.icon {
-    height: 3rem;
-}
-
-.icon-sm {
-    height: 2rem;
-}
-
-.icon-xs {
-    height: 1rem;
-}
-
-.icon-lg {
-    height: 5rem;
-}
-
-.card {
-    width: 15rem;
-    border-style: solid;
-    border-color: #cf94c1;
-}
-
-.card-divider {
+.footer {
+    background-color: cornflowerblue;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
     text-align: center;
 }
