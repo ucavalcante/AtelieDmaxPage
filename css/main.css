@@ -1,9 +1,51 @@
-.footer {
-    background-color: cornflowerblue;
+.container {
+    position: relative;
+}
+
+@media only screen and (max-width:700px) {
+    #sidebar {
+        width: 100%;
+        position: relative;
+        margin-bottom: 0;
+    }
+    #header, #content, #contact {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+#header {
+    margin-left: 255px;
+    background-color: #cf94c1;
+}
+
+#sidebar {
+    background-color: #cf94c1;
+    position: absolute;
+    top: 0;
+    width: 250px;
+    height: 100%;
+}
+
+#content {
+    margin-left: 255px;
+}
+
+#contact {
+    margin-left: 255px;
+}
+
+.footer{
+    margin-left: 255px;
+    text-align: left;
+}
+
+.footer-fixo {
+    /* background-color: cornflowerblue; */
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    color: white;
+    /* color: white; */
     text-align: center;
 }
