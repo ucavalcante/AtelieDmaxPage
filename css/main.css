@@ -60,14 +60,44 @@ body {
 }
 
 .column {
-    margin-top: 1rem;
-    width: 33.33333%;
-    float: left;
+    width: 18rem;
+    padding: .5rem;
 }
 
 .card {
-    border: solid #cf94c1;
-    max-width: 15rem;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+}
+
+.crop {
+    height: 12rem;
+    width: 15rem;
+    overflow: hidden;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.crop img {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
+    -ms-transform: translateY(-50%);
+    /* IE 9 */
+    transform: translateY(-50%);
+    /* IE 10, Fx 16+, Op 12.1+ */
 }
 
 li {
