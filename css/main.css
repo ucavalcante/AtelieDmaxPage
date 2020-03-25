@@ -34,6 +34,9 @@ body {
     z-index: 1;
     box-shadow: -7px -3px 5px rgba(10, 10, 10, .3);
     margin-left: 250px;
+    width: 80%;
+    padding-left: 3rem;
+    padding-right: 3rem;
 }
 
 #contact {
@@ -46,6 +49,42 @@ body {
     display: table-cell;
     width: 3rem;
     padding: 1rem;
+}
+
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.column {
+    margin-top: 1rem;
+    width: 33.33333%;
+    float: left;
+}
+
+.card {
+    border: solid #cf94c1;
+    max-width: 15rem;
+}
+
+li {
+    list-style-type: none;
+}
+
+.card h5 {
+    text-align: center;
+    font-weight: bold;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    -ms-interpolation-mode: bicubic;
+    display: inline-block;
 }
 
 .thumbnail {
@@ -99,6 +138,10 @@ h1 {
 
 h3 {
     font-size: 2rem;
+}
+
+h5 {
+    font-size: 1rem;
 }
 
 .footer-fixo {
