@@ -64,13 +64,24 @@ body {
     padding: .5rem;
 }
 
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.flex>div {
+    flex: 1 1 200px;
+    margin: 10px;
+}
+
 .card {
     position: relative;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    min-width: 0;
+    min-width: 200;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
@@ -182,6 +193,12 @@ h5 {
     text-align: center;
 }
 
+@media only screen and (max-width:1920px) {
+    .flex {
+        max-width: 1400px;
+    }
+}
+
 @media only screen and (max-width:768px) {
     #sidebar {
         width: 100%;
@@ -198,6 +215,6 @@ h5 {
     .footer {
         width: 80%;
         margin: 0;
-        font-size: .8rem ;
+        font-size: .8rem;
     }
 }

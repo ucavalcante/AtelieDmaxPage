@@ -4,31 +4,51 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
 ## [Unreleased]
-- Portifolio page for atelie Dmax
+
+
 ---
+
+## [Released]
+
+## [0.1.0] - 2020-04-09
+
+### Changed
+- content layou now is resposive
+
+### Removed
+- foundation layout
+
 ## [0.0.5] - 2020-03-25
+
 ### Added
 - new categories
+
 ### Fixed
 - phone mode
+
 ### Changed
 - image card layout
 
 ## [0.0.4] - 2020-03-24
+
 ### Removed
 - remove foundation css
 
 ## [0.0.3] - 2020-03-20
+
 ### Added
 - content description
+
 ### Changed
 - product categories layout
 
 ## [0.0.2] - 2020-03-18
+
 ### Added
 - add basic content
 
 ## [0.0.1] - 2020-03-18
+
 ### Added
 - add template page
 ---
@@ -38,10 +58,11 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 [Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
-[Unreleased]: https://github.com/ucavalcante/AtelieDmaxPage/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/ucavalcante/AtelieDmaxPage/compare/1.0.0...HEAD
 [Released]: https://github.com/ucavalcante/AtelieDmaxPage/releases
-[0.0.5]: https://github.com/ucavalcante/AtelieDmaxPage/compare/v0.0.4..v0.0.5
-[0.0.4]: https://github.com/ucavalcante/AtelieDmaxPage/compare/v0.0.3..v0.0.4
-[0.0.3]: https://github.com/ucavalcante/AtelieDmaxPage/compare/v0.0.2..v0.0.3
-[0.0.2]: https://github.com/ucavalcante/AtelieDmaxPage/compare/v0.0.1..v0.0.2
-[0.0.1]: https://github.com/ucavalcante/AtelieDmaxPage/releases/v0.0.1
+[0.1.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.0.5..0.1.0
+[0.0.5]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.0.4..0.0.5
+[0.0.4]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.0.3..0.0.4
+[0.0.3]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.0.2..0.0.3
+[0.0.2]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.0.1..0.0.2
+[0.0.1]: https://github.com/ucavalcante/AtelieDmaxPage/releases/0.0.1

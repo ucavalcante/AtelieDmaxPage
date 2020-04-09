@@ -7,11 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ateliê Dmax</title>
   <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 </head>
 
 <body>
   <div class="container">
-
     <header id="header">
       <h1>Sejam bem vindos ao Ateliê Dmax!</h1>
       <p> Torne aquela data comemorativa em um momento mais que especial com produtos personalizados,
@@ -20,83 +21,64 @@
     </header>
 
     <main id="content">
+      <router-view></router-view>
 
-      <ul class="row">
-
-        <li class="column">
-          <div class="card">
-            <h5>Bordados</h5>
-            <div class="crop">
-              <img src="img/products/img002.jpeg">
-            </div>
+      <section class="flex">
+        <div class="card">
+          <h5>Bordados</h5>
+          <div class="crop">
+            <img src="img/products/img002.jpeg">
           </div>
-        </li>
-        <li class="column">
-          <div class="card">
-            <h5>Fraldas</h5>
-            <div class="crop">
-              <img src="img/products/img008.jpeg">
-            </div>
+        </div>
+        <div class="card">
+          <h5>Fraldas</h5>
+          <div class="crop">
+            <img src="img/products/img008.jpeg">
           </div>
-        </li>
-        <li class="column">
-          <div class="card">
-            <h5>Capas</h5>
-            <div class="crop">
-              <img src="img/products/img009.jpeg">
-            </div>
+        </div>
+        <div class="card">
+          <h5>Capas</h5>
+          <div class="crop">
+            <img src="img/products/img009.jpeg">
           </div>
-        </li>
-        <li class="column">
-          <div class="card">
-            <h5>Batizados</h5>
-            <div class="crop">
-              <img src="img/products/img004.jpeg">
-            </div>
+        </div>
+        <div class="card">
+          <h5>Batizados</h5>
+          <div class="crop">
+            <img src="img/products/img004.jpeg">
           </div>
-        </li>
-        <li class="column">
-          <div class="card">
-            <h5>Casamentos</h5>
-            <div class="crop">
-              <img src="img/products/img006.jpeg">
-            </div>
+        </div>
+        <div class="card">
+          <h5>Casamentos</h5>
+          <div class="crop">
+            <img src="img/products/img006.jpeg">
           </div>
-        </li>
-        <li class="column">
-          <div class="card">
-            <h5>Lembrancinhas</h5>
-            <div class="crop">
-              <img src="img/products/img010.jpeg">
-            </div>
+        </div>
+        <div class="card">
+          <h5>Lembrancinhas</h5>
+          <div class="crop">
+            <img src="img/products/img010.jpeg">
           </div>
-        </li>
-        <li class="column">
-          <div class="card">
-            <h5>Kits higiênicos</h5>
-            <div class="crop">
-              <img src="img/products/img003.jpeg">
-            </div>
+        </div>
+        <div class="card">
+          <h5>Kits higiênicos</h5>
+          <div class="crop">
+            <img src="img/products/img003.jpeg">
           </div>
-        </li>
-        <li class="column">
-          <div class="card">
-            <h5>Cozinha</h5>
-            <div class="crop">
-              <img src="img/products/img005.jpeg">
-            </div>
+        </div>
+        <div class="card">
+          <h5>Cozinha</h5>
+          <div class="crop">
+            <img src="img/products/img005.jpeg">
           </div>
-        </li>
-        <li class="column">
-          <div class="card">
-            <h5>Masculino</h5>
-            <div class="crop">
-              <img src="img/products/img007.jpeg">
-            </div>
+        </div>
+        <div class="card">
+          <h5>Masculino</h5>
+          <div class="crop">
+            <img src="img/products/img007.jpeg">
           </div>
-        </li>
-
-      </ul>
+        </div>
+      </section>
     </main>
 
     <aside id="sidebar">
@@ -143,7 +125,7 @@
     </footer>
 
   </div>
-  <script>
+  <script src="js/main.js">
   </script>
 </body>
 
