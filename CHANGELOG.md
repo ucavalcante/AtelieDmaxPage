@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 - disable facebook link
 - remove vue router
 
+### Added
+- card hover on mouse over
 
 ---
 
