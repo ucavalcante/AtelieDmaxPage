@@ -17,6 +17,11 @@ body {
     font-size: 125%;
 }
 
+#header h1 {
+    font-weight: 700;
+    font-style: italic;
+}
+
 #sidebar {
     z-index: -1;
     background-color: #cf94c1;
@@ -29,6 +34,11 @@ body {
     padding-right: 1rem;
     box-sizing: border-box;
     border: 1px solid rgba(10, 10, 10, .25);
+}
+
+#sidebar h2 {
+    font-weight: 700;
+    font-style: italic;
 }
 
 #content {
@@ -174,6 +184,7 @@ h1, h2, h3, h4, h5, h6 {
 p {
     line-height: 1.6;
     margin-bottom: 1rem;
+    color: rgb(32, 32, 32);
 }
 
 h1 {
