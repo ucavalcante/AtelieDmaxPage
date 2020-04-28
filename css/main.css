@@ -17,6 +17,36 @@ body {
     font-size: 125%;
 }
 
+#IrPraLoja {
+    float: right;
+    background-color: purple;
+    border-radius: 1em;
+}
+
+#IrPraLoja:hover {
+    background-color: #339933;
+}
+
+#IrPraLoja a {
+    padding: 2px 20px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 700;
+    color: #ddd;
+    font-size: .8em;
+    text-transform: uppercase;
+}
+
+#IrPraLoja a img {
+    height: 1.2em;
+}
+
+#header h1 {
+    font-weight: 700;
+    font-style: italic;
+}
+
 #sidebar {
     z-index: -1;
     background-color: #cf94c1;
@@ -29,6 +59,11 @@ body {
     padding-right: 1rem;
     box-sizing: border-box;
     border: 1px solid rgba(10, 10, 10, .25);
+}
+
+#sidebar h2 {
+    font-weight: 700;
+    font-style: italic;
 }
 
 #content {
@@ -89,6 +124,11 @@ body {
     border-radius: .25rem;
 }
 
+.card:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
 .crop {
     height: 12rem;
     width: 15rem;
@@ -143,22 +183,57 @@ li {
     text-align: left;
 }
 
-blockquote, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, li, ol, p, pre, td, th, ul {
+blockquote,
+dd,
+div,
+dl,
+dt,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+ol,
+p,
+pre,
+td,
+th,
+ul {
     margin: 0;
     padding: 0;
 }
 
-body, h1, h2, h3, h4, h5, h6 {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     font-weight: 400;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     text-rendering: optimizeLegibility;
     /* line-height: 2rem; */
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-style: normal;
     color: inherit;
     margin-top: 0;
@@ -169,6 +244,7 @@ h1, h2, h3, h4, h5, h6 {
 p {
     line-height: 1.6;
     margin-bottom: 1rem;
+    color: rgb(32, 32, 32);
 }
 
 h1 {
@@ -205,7 +281,8 @@ h5 {
         position: relative;
         margin: 0;
     }
-    #header, #content {
+    #header,
+    #content {
         margin: 0;
     }
     #contact {
