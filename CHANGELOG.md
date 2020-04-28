@@ -9,6 +9,14 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Released]
 
+## [0.4.0] - 2020-04-28
+
+### Added
+- robots.txt file for SEO
+
+### Removed
+- vuejs router reference
+
 ## [0.3.0] - 2020-04-28
 
 ### Added
@@ -74,6 +82,7 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 <!-- Versions -->
 [Unreleased]: https://github.com/ucavalcante/AtelieDmaxPage/compare/1.0.0...HEAD
 [Released]: https://github.com/ucavalcante/AtelieDmaxPage/releases
+[0.4.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.3.0..0.4.0
 [0.3.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.2.0..0.3.0
 [0.2.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.1.0..0.2.0
 [0.1.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.0.5..0.1.0
