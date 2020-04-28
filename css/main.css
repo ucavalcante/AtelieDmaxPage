@@ -17,6 +17,31 @@ body {
     font-size: 125%;
 }
 
+#IrPraLoja {
+    float: right;
+    background-color: purple;
+    border-radius: 1em;
+}
+
+#IrPraLoja:hover {
+    background-color: #339933;
+}
+
+#IrPraLoja a {
+    padding: 2px 20px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 700;
+    color: #ddd;
+    font-size: .8em;
+    text-transform: uppercase;
+}
+
+#IrPraLoja a img {
+    height: 1.2em;
+}
+
 #header h1 {
     font-weight: 700;
     font-style: italic;
@@ -158,22 +183,57 @@ li {
     text-align: left;
 }
 
-blockquote, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, li, ol, p, pre, td, th, ul {
+blockquote,
+dd,
+div,
+dl,
+dt,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+ol,
+p,
+pre,
+td,
+th,
+ul {
     margin: 0;
     padding: 0;
 }
 
-body, h1, h2, h3, h4, h5, h6 {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     font-weight: 400;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     text-rendering: optimizeLegibility;
     /* line-height: 2rem; */
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-style: normal;
     color: inherit;
     margin-top: 0;
@@ -221,7 +281,8 @@ h5 {
         position: relative;
         margin: 0;
     }
-    #header, #content {
+    #header,
+    #content {
         margin: 0;
     }
     #contact {

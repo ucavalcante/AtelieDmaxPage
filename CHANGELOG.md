@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 ## [Unreleased]
 - disable facebook link
 - remove vue router
+- add compre agora button
 
 ### Added
 - card hover on mouse over
