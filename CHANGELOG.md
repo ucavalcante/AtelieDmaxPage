@@ -9,6 +9,11 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Released]
 
+## [0.3.0] - 2020-04-28
+
+### Added
+- create sitemap.xml file for SEO
+
 ## [0.2.0] - 2020-04-28
 
 ### Added
@@ -64,11 +69,12 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 <!-- Links -->
 [Keep a Changelog]: https://keepachangelog.com/
-[Semantic Versioning]: https://semver.org/
+[Semantic Versioning]: https://se2mver.org/
 
 <!-- Versions -->
 [Unreleased]: https://github.com/ucavalcante/AtelieDmaxPage/compare/1.0.0...HEAD
 [Released]: https://github.com/ucavalcante/AtelieDmaxPage/releases
+[0.3.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.2.0..0.3.0
 [0.2.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.1.0..0.2.0
 [0.1.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.0.5..0.1.0
 [0.0.5]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.0.4..0.0.5
