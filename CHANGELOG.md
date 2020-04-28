@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Unreleased]
 
+### Fixed
+- add description in metatag
+- all images alternative text
+
 ---
 
 ## [Released]
