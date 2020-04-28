@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+# Disallow: /cgi-bin/
+# Disallow: /tmp/
+# Disallow: /junk/
+
+#Sitemap
+Sitemap: https://ateliedmax.com.br/sitemap.xml

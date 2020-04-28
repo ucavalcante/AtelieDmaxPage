@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Unreleased]
 
+### Added
+- robots.txt file for SEO
+
+### Removed
+- vuejs router reference
+
 ---
 
 ## [Released]
