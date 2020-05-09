@@ -1,4 +1,3 @@
 const app = new Vue({
-    router
-}).$mount('#content')
 
+}).$mount('#content')

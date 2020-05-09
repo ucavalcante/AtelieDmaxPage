@@ -21,6 +21,7 @@ body {
     float: right;
     background-color: purple;
     border-radius: 1em;
+    box-shadow: 0 0 2px;
 }
 
 #IrPraLoja:hover {
