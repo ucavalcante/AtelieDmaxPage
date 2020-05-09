@@ -5,14 +5,21 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Unreleased]
 
-- add shadow in irPraLoja button
-- add favicon
-- change css and js load order
-
 
 ---
 
 ## [Released]
+
+## [0.5.0] - 2020-05-09
+
+### Added
+
+- favicon
+- shadow in irPraLoja button
+
+### Fixed
+
+- css and js load order
 
 ## [0.4.1] - 2020-04-28
 
