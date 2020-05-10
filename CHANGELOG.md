@@ -10,6 +10,14 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Released]
 
+## [0.6.0] - 2020-05-09
+
+### Added
+- add cloudinary service for image transformation
+
+### Changed
+- change file format for images to webp
+
 ## [0.5.0] - 2020-05-09
 
 ### Added
@@ -100,6 +108,8 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 <!-- Versions -->
 [Unreleased]: https://github.com/ucavalcante/AtelieDmaxPage/compare/1.0.0...HEAD
 [Released]: https://github.com/ucavalcante/AtelieDmaxPage/releases
+[0.6.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.5.0..0.6.0
+[0.5.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.4.1..0.5.0
 [0.4.1]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.4.0..0.4.1
 [0.4.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.3.0..0.4.0
 [0.3.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.2.0..0.3.0
