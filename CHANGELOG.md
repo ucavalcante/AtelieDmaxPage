@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Unreleased]
 
+- change file format
+- add cloudinary service for images
 
 ---
 
