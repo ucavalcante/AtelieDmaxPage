@@ -5,10 +5,13 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Unreleased]
 
-
 ---
 
 ## [Released]
+
+## [0.7.0] - 2021-01-29
+
+- add clarity tracking
 
 ## [0.6.0] - 2020-05-09
 
