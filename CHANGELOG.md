@@ -5,10 +5,13 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Unreleased]
 
-
 ---
 
 ## [Released]
+
+## [0.7.0] - 2021-01-29
+
+- add clarity tracking
 
 ## [0.6.0] - 2020-05-09
 
@@ -108,6 +111,7 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 <!-- Versions -->
 [Unreleased]: https://github.com/ucavalcante/AtelieDmaxPage/compare/1.0.0...HEAD
 [Released]: https://github.com/ucavalcante/AtelieDmaxPage/releases
+[0.7.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.6.0..0.7.0
 [0.6.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.5.0..0.6.0
 [0.5.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.4.1..0.5.0
 [0.4.1]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.4.0..0.4.1
