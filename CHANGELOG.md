@@ -9,6 +9,12 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Released]
 
+## [0.8.0] - 2021-10-30
+
+### Changed
+
+- change url and icon from store to products
+
 ## [0.7.0] - 2021-01-29
 
 - add clarity tracking
