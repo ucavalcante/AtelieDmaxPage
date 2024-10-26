@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixa Convite - Ateliê Dmax</title>
+    <meta name="description" content="Convites em caixas personalizadas para ocasiões especiais - Produtos artesanais únicos do Ateliê Dmax">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="../products.css">
+    <link rel="stylesheet" href="../product-detail.css">
+    <link rel="stylesheet" href="/fonts/fontawesome/fontawesome-free-6.5.1-web/css/all.min.css">
+    
+    <!-- Vue.js 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="product-detail-app" class="product-detail-container">
+        <!-- Header com navegação -->
+        <header class="product-header">
+            <button type="button" @click="goBack" class="btn-back" aria-label="Voltar para galeria principal">
+                <i class="fas fa-arrow-left"></i>
+                Voltar à Galeria
+            </button>
+            <h1 class="product-title">{{ productData.name }}</h1>
+            <p class="product-description">{{ productData.description }}</p>
+        </header>
+
+        <!-- Loading State -->
+        <div v-if="loading" class="loading-container">
+            <div class="spinner"></div>
+            <p>Carregando imagens...</p>
+        </div>
+
+        <!-- Error State -->
+        <div v-if="error" class="error-container">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>{{ error }}</p>
+            <button type="button" @click="retryLoad" class="btn-retry">Tentar Novamente</button>
+        </div>
+
+        <!-- Main Content -->
+        <main v-if="!loading && !error" class="product-content">
+            <!-- Carrossel de Imagens -->
+            <section class="carousel-section">
+                <div class="carousel-container">
+                    <!-- Imagem Principal -->
+                    <div class="main-image-container">
+                        <img 
+                            :src="getCurrentImageUrl()" 
+                            :alt="getCurrentImageDescription()"
+                            :title="getCurrentImageDescription()"
+                            alt="Imagem do produto"
+                            title="Imagem do produto"
+                            class="main-image"
+                            @error="handleImageError"
+                            loading="lazy"
+                        >
+                        
+                        <!-- Controles de Navegação -->
+                        <button 
+                            v-if="images.length > 1"
+                            type="button"
+                            @click="previousImage" 
+                            class="nav-btn nav-prev"
+                            aria-label="Imagem anterior"
+                            title="Imagem anterior"
+                        >
+                            <i class="fas fa-chevron-left"></i>
+                            <span class="sr-only">Anterior</span>
+                        </button>
+                        
+                        <button 
+                            v-if="images.length > 1"
+                            type="button"
+                            @click="nextImage" 
+                            class="nav-btn nav-next"
+                            aria-label="Próxima imagem"
+                            title="Próxima imagem"
+                        >
+                            <i class="fas fa-chevron-right"></i>
+                            <span class="sr-only">Próxima</span>
+                        </button>
+                        
+                        <!-- Indicadores -->
+                        <div v-if="images.length > 1" class="image-indicators">
+                            <button 
+                                v-for="(image, index) in images" 
+                                :key="index"
+                                type="button"
+                                @click="goToImage(index)"
+                                :class="['indicator', { active: currentImageIndex === index }]"
+                                :aria-label="'Ir para imagem ' + (index + 1)"
+                                :title="'Imagem ' + (index + 1)"
+                            >
+                                <span class="sr-only">Imagem {{ index + 1 }}</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Thumbnails -->
+                    <div v-if="images.length > 1" class="thumbnails-container">
+                        <button 
+                            v-for="(image, index) in images" 
+                            :key="index"
+                            type="button"
+                            @click="goToImage(index)"
+                            :class="['thumbnail', { active: currentImageIndex === index }]"
+                            :aria-label="'Visualizar imagem ' + (index + 1)"
+                            :title="'Visualizar imagem ' + (index + 1)"
+                        >
+                            <img 
+                                :src="getImageUrl(image)" 
+                                :alt="getImageDescription(image, index)"
+                                :title="getImageDescription(image, index)"
+                                loading="lazy"
+                                alt="Imagem do produto"
+                                title="Imagem do produto"
+                            >
+                            <span class="sr-only">Visualizar imagem {{ index + 1 }}</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Informações da Imagem -->
+            <section v-if="getCurrentImageDescription()" class="image-info">
+                <div class="info-card">
+                    <h3>Sobre esta imagem</h3>
+                    <p>{{ getCurrentImageDescription() }}</p>
+                    
+                    <!-- Informações extras se disponíveis -->
+                    <div v-if="getCurrentImageData().details" class="image-details">
+                        <h4>Detalhes</h4>
+                        <ul>
+                            <li v-for="detail in getCurrentImageData().details" :key="detail">
+                                {{ detail }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="cta-section">
+                <div class="cta-content">
+                    <h3>Interessou-se por este produto?</h3>
+                    <p>Entre em contato conosco para mais informações e orçamentos personalizados.</p>
+                    
+                    <div class="cta-buttons">
+                        <a 
+                            :href="getWhatsAppLink()" 
+                            class="btn-primary"
+                            target="_blank" 
+                            rel="noopener"
+                            aria-label="Falar conosco pelo WhatsApp"
+                        >
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp
+                        </a>
+                        
+                        <a 
+                            href="https://www.instagram.com/ateliedmax/" 
+                            class="btn-secondary"
+                            target="_blank" 
+                            rel="noopener"
+                            aria-label="Seguir no Instagram"
+                        >
+                            <i class="fab fa-instagram"></i>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/auto-image-detector.js"></script>
+    <script src="/js/product-detail.js"></script>
+</body>
+
+</html>

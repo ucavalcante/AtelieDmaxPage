@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Ateliê Dmax</title>
+    <meta name="description" content="Confira nossa coleção de artesanatos em MDF, bordados eletrônicos e produtos personalizados">
+    <meta name="keywords" content="artesanato, MDF, bordado eletrônico, enxoval bebê, batizado, convites personalizados">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/css/font.css" as="style">
+    <link rel="preload" href="products.css" as="style">
+    <link rel="preload" href="/data/products.json" as="fetch" crossorigin>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="products.css">
+    
+    <!-- Vue.js 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Auto Image Detector - CARREGADO PRIMEIRO -->
+    <script src="/js/auto-image-detector.js"></script>
+    
+    <!-- Product Gallery Vue 3 - CARREGADO DEPOIS -->
+    <script src="/js/product-gallery.js"></script>
+</head>
+
+<body>
+    <div id="content">
+        <!-- Vue.js Component -->
+        <product-gallery @category-selected="handleCategorySelection"></product-gallery>
+        
+        <!-- Fallback para quando JavaScript está desabilitado -->
+        <noscript>
+            <section class="card-container">
+                <div class="card">
+                    <div class="crop">
+                        <div class="theme1"></div>
+                    </div>
+                    <h5>Enxoval de Bebê</h5>
+                    <p class="category-description">Enxovais personalizados com bordados únicos para bebês</p>
+                </div>
+                <div class="card">
+                    <div class="crop">
+                        <div class="theme2"></div>
+                    </div>
+                    <h5>Batizado</h5>
+                    <p class="category-description">Artigos especiais para cerimônias de batizado</p>
+                </div>
+                <div class="card">
+                    <div class="crop">
+                        <div class="theme3"></div>
+                    </div>
+                    <h5>Caixa Convite</h5>
+                    <p class="category-description">Convites em caixas personalizadas para ocasiões especiais</p>
+                </div>
+                <div class="card">
+                    <div class="crop">
+                        <div class="theme4"></div>
+                    </div>
+                    <h5>Ocasiões Especiais</h5>
+                    <p class="category-description">Artesanatos únicos para momentos inesquecíveis</p>
+                </div>
+                <div class="card">
+                    <div class="crop">
+                        <div class="theme5"></div>
+                    </div>
+                    <h5>Sapato Infantil Customizado</h5>
+                    <p class="category-description">Sapatos infantis personalizados com bordados e decorações únicas</p>
+                </div>
+            </section>
+        </noscript>
+    </div>
+
+    <!-- Load Vue 3 component -->
+    <script src="/js/product-gallery.js"></script>
+    
+    <script>
+        // Initialize Vue 3 app
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('🚀 Inicializando Vue 3 Ateliê Dmax...');
+            
+            // Aguarda dependências carregarem
+            let attempts = 0;
+            while (!window.ProductGalleryApp && attempts < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                attempts++;
+            }
+            
+            if (window.ProductGalleryApp) {
+                try {
+                    // Monta aplicação Vue 3
+                    const app = window.ProductGalleryApp.mount('#content');
+                    console.log('✅ Vue 3 Gallery montado com sucesso');
+                    
+                    // Disponibiliza globalmente para debug
+                    window.atelieApp = app;
+                    
+                } catch (error) {
+                    console.error('❌ Erro ao montar Vue 3 app:', error);
+                    
+                    // Fallback: mostra conteúdo estático
+                    document.querySelector('noscript').style.display = 'block';
+                }
+            } else {
+                console.error('❌ ProductGalleryApp não carregou');
+                document.querySelector('noscript').style.display = 'block';
+            }
+        });
+        
+        // Debug helpers
+        window.atelieDebug = {
+            getApp: () => window.atelieApp,
+            getComponent: () => window.ProductGalleryComponent,
+            getVue: () => Vue
+        };
+    </script>
+</body>
+
+</html>

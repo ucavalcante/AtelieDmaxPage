@@ -1,0 +1,58 @@
+{
+  "categories": [
+    {
+      "id": "enxoval-bebe",
+      "name": "Enxoval de Bebê",
+      "description": "Enxovais personalizados com bordados únicos para bebês",
+      "folder": "enxoval-bebe",
+      "images": [],
+      "keywords": ["enxoval", "bebê", "bordado", "personalizado", "artesanato em mdf"]
+    },
+    {
+      "id": "sapato-infantil",
+      "name": "Sapato Infantil Customizado",
+      "description": "Sapatos infantis personalizados com bordados e decorações únicas",
+      "folder": "sapato-infantil",
+      "images": [],
+      "keywords": ["sapato infantil", "customizado", "bordado", "personalizado", "criança", "calçado"]
+    },
+    {
+      "id": "batizado",
+      "name": "Batizado",
+      "description": "Artigos especiais para cerimônias de batizado",
+      "folder": "batizado",
+      "images": [],
+      "keywords": ["batizado", "cerimônia", "religioso", "bordado eletrônico"]
+    },
+    {
+      "id": "caixa-convite",
+      "name": "Caixa Convite",
+      "description": "Convites em caixas personalizadas para ocasiões especiais",
+      "folder": "caixa-convite",
+      "images": [],
+      "keywords": ["convites personalizados", "caixa", "casamento", "artesanato"]
+    },
+    {
+      "id": "ocasioes-especiais",
+      "name": "Ocasiões Especiais",
+      "description": "Artesanatos únicos para momentos inesquecíveis",
+      "folder": "ocasioes-especiais",
+      "images": [],
+      "keywords": ["ocasião especial", "ateliê artesanal", "personalizado"]
+    },
+    {
+      "id": "depoimentos",
+      "name": "Depoimentos",
+      "description": "Avaliações e comentários de nossos queridos clientes",
+      "folder": "depoimentos",
+      "images": [],
+      "keywords": ["depoimentos", "avaliações", "clientes", "feedback", "testemunhos"]
+    }
+  ],
+  "settings": {
+    "basePath": "/img/products/",
+    "fallbackImage": "/img/products/placeholder.jpg",
+    "lazyLoading": true,
+    "imageFormats": ["webp", "jpeg", "jpg", "png"]
+  }
+}
