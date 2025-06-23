@@ -30,15 +30,14 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # Tentar npm ci primeiro, se falhar usar npm install
+          npm ci || npm install
 
       - name: Compile TypeScript to JavaScript
         run: |
-          # Compilar arquivos TypeScript principais
-          npx tsc ts/auto-image-detector.ts --outDir js --target ES2018 --lib ES2018,DOM --skipLibCheck
-          npx tsc ts/product-gallery.ts --outDir js --target ES2018 --lib ES2018,DOM --skipLibCheck || echo "Arquivo não encontrado, continuando..."
-          npx tsc ts/product-detail.ts --outDir js --target ES2018 --lib ES2018,DOM --skipLibCheck || echo "Arquivo não encontrado, continuando..."
-          npx tsc ts/main.ts --outDir js --target ES2018 --lib ES2018,DOM --skipLibCheck || echo "Arquivo não encontrado, continuando..."
+          # Usar script build do package.json
+          npm run build
           
           # Verificar se compilação foi bem-sucedida
           echo "Arquivos JavaScript gerados:"
