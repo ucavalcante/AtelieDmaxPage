@@ -1,0 +1,43 @@
+name: Deploy Production and Develop to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to GitHub Pages (Production)
+        if: github.ref == 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+
+      - name: Build develop version
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          npm run build
+          mkdir -p gh-pages-develop
+          mv build/* gh-pages-develop/
+
+      - name: Deploy to GitHub Pages (Develop)
+        if: github.ref == 'refs/heads/develop'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages-develop
+          destination_dir: develop
