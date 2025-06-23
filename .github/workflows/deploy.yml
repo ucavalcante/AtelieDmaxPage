@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     
     permissions:
-      contents: read
+      contents: write  # Necessário para push no repositório
       pages: write
       id-token: write
 
