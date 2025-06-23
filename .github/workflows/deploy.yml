@@ -1,0 +1,121 @@
+name: Deploy Production and Develop to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request: 
+    branches:
+      - master
+      - develop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # Necessário para push no repositório
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          # Tentar npm ci primeiro, se falhar usar npm install
+          npm ci || npm install
+
+      - name: Compile TypeScript to JavaScript
+        run: |
+          # Usar script build do package.json
+          npm run build
+          
+          # Verificar se compilação foi bem-sucedida
+          echo "Arquivos JavaScript gerados:"
+          ls -la js/ || echo "Pasta js/ não encontrada"
+
+      - name: Validate project structure
+        run: |
+          echo "Validando estrutura do projeto..."
+          echo "Verificando arquivos principais:"
+          ls -la index.html
+          ls -la css/
+          ls -la img/
+          ls -la data/
+          echo "Verificando arquivos JavaScript compilados:"
+          ls -la js/ || echo "Nenhum arquivo JS compilado encontrado"
+
+      - name: Deploy to GitHub Pages (Production)
+        if: github.ref == 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./ # Publica a raiz do projeto (site estático)
+          cname: ateliedmax.com.br  # IMPORTANTE: Manter CNAME para produção
+          exclude_assets: |
+            .github
+            .ai-workspace
+            ts
+            node_modules
+            .gitignore
+            package*.json
+            tsconfig.json
+            README.md
+
+      - name: Prepare develop version
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          echo "Preparando versão de desenvolvimento para /develop..."
+          mkdir -p gh-pages-develop
+          
+          # Copiar todos os arquivos necessários
+          cp -r css gh-pages-develop/
+          cp -r img gh-pages-develop/
+          cp -r js gh-pages-develop/
+          cp -r data gh-pages-develop/
+          cp -r src gh-pages-develop/
+          cp -r fonts gh-pages-develop/
+          cp index.html gh-pages-develop/
+          cp sitemap.xml gh-pages-develop/
+          cp robots.txt gh-pages-develop/
+          
+          # Adicionar indicador de versão develop no HTML
+          sed -i 's/<title>/<title>[DEVELOP] /' gh-pages-develop/index.html
+          sed -i 's/<head>/<head>\n    <!-- DEVELOP VERSION - $(date) -->/' gh-pages-develop/index.html
+          
+          # Criar arquivo .nojekyll para evitar processamento Jekyll
+          touch gh-pages-develop/.nojekyll
+          
+          echo "Estrutura da versão develop preparada:"
+          ls -la gh-pages-develop/
+          echo "Conteúdo do index.html:"
+          head -10 gh-pages-develop/index.html
+
+      - name: Deploy to GitHub Pages (Develop)
+        if: github.ref == 'refs/heads/develop'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages-develop
+          destination_dir: develop
+          enable_jekyll: false
+          keep_files: false
+          allow_empty_commit: false
+
+      - name: Deploy to GitHub Pages (Develop Alternative)
+        if: github.ref == 'refs/heads/develop' && false  # Desabilitado por enquanto
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages-develop
+          publish_branch: develop-pages  # Branch separada para develop
+          enable_jekyll: false
