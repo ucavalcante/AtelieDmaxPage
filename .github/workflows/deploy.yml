@@ -60,6 +60,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./ # Publica a raiz do projeto (site estático)
+          cname: ateliedmax.com.br  # IMPORTANTE: Manter CNAME para produção
           exclude_assets: |
             .github
             .ai-workspace
