@@ -86,14 +86,18 @@ jobs:
           cp index.html gh-pages-develop/
           cp sitemap.xml gh-pages-develop/
           cp robots.txt gh-pages-develop/
-          cp CNAME gh-pages-develop/ || echo "CNAME não encontrado, continuando..."
           
           # Adicionar indicador de versão develop no HTML
           sed -i 's/<title>/<title>[DEVELOP] /' gh-pages-develop/index.html
           sed -i 's/<head>/<head>\n    <!-- DEVELOP VERSION - $(date) -->/' gh-pages-develop/index.html
           
+          # Criar arquivo .nojekyll para evitar processamento Jekyll
+          touch gh-pages-develop/.nojekyll
+          
           echo "Estrutura da versão develop preparada:"
           ls -la gh-pages-develop/
+          echo "Conteúdo do index.html:"
+          head -10 gh-pages-develop/index.html
 
       - name: Deploy to GitHub Pages (Develop)
         if: github.ref == 'refs/heads/develop'
@@ -102,4 +106,15 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./gh-pages-develop
           destination_dir: develop
-          cname: false  # Não usar CNAME personalizado para develop
+          enable_jekyll: false
+          keep_files: false
+          allow_empty_commit: false
+
+      - name: Deploy to GitHub Pages (Develop Alternative)
+        if: github.ref == 'refs/heads/develop' && false  # Desabilitado por enquanto
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages-develop
+          publish_branch: develop-pages  # Branch separada para develop
+          enable_jekyll: false
