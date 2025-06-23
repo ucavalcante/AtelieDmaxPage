@@ -1,0 +1,489 @@
+:root {
+  --white: #f9f9f9;
+  --black: #36383f;
+  --gray: #85888c;
+  --error-red: #d32f2f;
+
+  /* Paleta unificada roxo/rosa */
+  --primary-purple: #8B4F9F;
+  --secondary-pink: #CF94C2;
+  --accent-magenta: #FC01CE;
+  --accent-magenta-dark: #E000B8;
+  --light-purple: rgba(139, 79, 159, 0.1);
+  --medium-purple: rgba(139, 79, 159, 0.7);
+  --dark-purple: #5A2C6B;
+  
+  /* Variações de transparência para shadows e efeitos */
+  --purple-shadow-light: rgba(139, 79, 159, 0.2);
+  --purple-shadow-medium: rgba(139, 79, 159, 0.3);
+  --purple-shadow-strong: rgba(139, 79, 159, 0.4);
+  --purple-ultra-light: rgba(139, 79, 159, 0.05);
+  --pink-ultra-light: rgba(207, 148, 194, 0.08);
+  --pink-light: rgba(207, 148, 194, 0.1);
+  --magenta-focus: rgba(252, 1, 206, 0.5);
+  --magenta-shadow: rgba(252, 1, 206, 0.4);
+  --header-bg-strong: rgba(139, 79, 159, 0.95);
+
+  /* Fundos translúcidos */
+  --nav-bg: rgba(139, 79, 159, 0.85);
+  --header-bg: rgba(252, 1, 206, 0.1);
+  --header-border: rgba(252, 1, 206, 0.3);
+  --border-focus: rgba(252, 1, 206, 0.2);
+}
+
+body,
+html {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+
+  background: linear-gradient(rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.1)),
+    url("/img/bg001.jpg") no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+object {
+  position: fixed;
+  width: 100%;
+  height: calc(100% - 110px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a i {
+  padding: 0 1em 0 0.5em;
+}
+
+.header {
+  border-bottom: 4px solid var(--header-border, rgba(252, 1, 206, 0.3));
+  background: var(--header-bg, rgba(139, 79, 159, 0.95));
+  box-shadow: 1px 1px 5px 0px var(--gray, #909090);
+  position: relative;
+  z-index: 10;
+  padding: 1em;
+  width: 100%;
+  background-color: var(--nav-bg, rgba(139, 79, 159, 0.85));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.menu {
+  margin: 0;
+  padding: 10px 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu a {
+  display: block;
+  color: var(--white, #ffffff);
+  font-family: "cigno", Arial, sans-serif;
+  font-size: 1.4em;
+  border-radius: 15px;
+  font-weight: 400;
+  background: linear-gradient(135deg, var(--secondary-pink, #CF94C2), var(--primary-purple, #8B4F9F));
+  margin: 0.8em;
+  padding: 15px 25px;
+  text-align: center;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px var(--purple-shadow-light, rgba(139, 79, 159, 0.2));
+  border: 2px solid transparent;
+}
+
+.menu a:hover {
+  background: linear-gradient(135deg, var(--accent-magenta), var(--dark-purple));
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px var(--purple-shadow-medium);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.menu a:focus {
+  outline: 3px solid var(--magenta-focus);
+  outline-offset: 2px;
+}
+
+.menu a i {
+  font-size: 1.1em;
+}
+
+.logo {
+  font-family: "AdineKirnberg", serif;
+  font-size: clamp(2.5em, 5vw, 4em);
+  text-decoration: none;
+  font-weight: normal;
+  background: linear-gradient(135deg, var(--primary-purple), var(--accent-magenta));
+  color: var(--white);
+  padding: 8px 25px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px var(--purple-shadow-medium);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.logo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px var(--purple-shadow-strong);
+  background: linear-gradient(135deg, var(--accent-magenta), var(--primary-purple));
+}
+
+.logo:focus {
+  outline: 3px solid var(--magenta-focus);
+  outline-offset: 4px;
+}
+
+.nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--nav-bg, rgba(139, 79, 159, 0.85));
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.hamb {
+  cursor: pointer;
+  float: right;
+  padding: clamp(20px, 4vw, 40px) clamp(15px, 3vw, 20px);
+  border-radius: 10px;
+  background: var(--primary-purple);
+  background: linear-gradient(320deg, var(--light-purple) 0%, var(--medium-purple) 100%);
+  transition: all 0.3s ease;
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamb-line {
+  background: var(--white);
+  display: block;
+  height: 2px;
+  position: relative;
+  width: 24px;
+}
+
+.hamb-line::before,
+.hamb-line::after {
+  background: var(--white);
+  content: "";
+  display: block;
+  height: 100%;
+  position: absolute;
+  transition: all 0.2 ease-out;
+  width: 100%;
+}
+
+.hamb-line::before {
+  top: 5px;
+}
+
+.hamb-line::after {
+  top: -5px;
+}
+
+.side-menu {
+  display: none;
+}
+
+.side-menu:checked~.nav {
+  display: block !important;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.side-menu:checked~.hamb .hamb-line {
+  background: transparent;
+}
+
+.side-menu:checked~.hamb .hamb-line::before {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+.side-menu:checked~.hamb .hamb-line::after {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+/* Aplica margin-top apenas em resoluções BAIXAS (celulares/tablets) */
+body.menu-open .content {
+  margin-top: 150px;
+  transition: margin-top 0.3s ease-in-out;
+}
+
+@media (min-width: 965px) {
+  .nav {
+    /* Remove display: block !important to keep hamburger menu behavior */
+    max-height: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 280px;
+    padding: 1em;
+  }
+
+  .menu {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .menu li {
+    margin: 0.5em 0;
+  }
+
+  /* Keep hamburger menu visible in larger screens */
+  .hamb {
+    display: block;
+  }
+
+  .menu a {
+    margin: 0.5em 0;
+    text-align: center;
+  }
+
+  /* Remove o margin-top em resoluções ALTAS (desktop) */
+  body.menu-open .content {
+    margin-top: 0;
+  }
+}
+
+/* Melhorias de Responsividade e Design Moderno */
+
+/* Performance - transições suaves */
+* {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Melhorias para acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Container principal responsivo */
+.container {
+  margin: 0 auto;
+}
+
+.content {
+  max-width: 1200px;
+}
+
+/* Header aprimorado */
+.header {
+  background: var(--header-bg-strong);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-focus);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Responsividade aprimorada para tablets */
+@media (min-width: 801px) and (max-width: 1200px) {
+  .logo {
+    font-size: 3em;
+  }
+
+  .menu a {
+    font-size: 1.3em;
+    margin: 0.6em;
+    padding: 12px 20px;
+  }
+
+  .hamb {
+    padding: 35px 18px;
+  }
+}
+
+/* Responsividade para mobile */
+@media (max-width: 800px) {
+  .logo {
+    font-size: 2.5em;
+    padding: 6px 20px;
+  }
+
+  .menu a {
+    font-size: 1.2em;
+    margin: 0.5em;
+    padding: 12px 18px;
+    min-height: 50px;
+  }
+
+  .menu a i {
+    font-size: 1em;
+  }
+
+  .hamb {
+    padding: 25px 15px;
+  }
+
+  /* Otimização para toque */
+  .menu a {
+    min-height: 44px;
+    /* Tamanho mínimo recomendado para toque */
+  }
+}
+
+/* Melhorias para telas muito pequenas */
+@media (max-width: 480px) {
+
+
+  .logo {
+    font-size: 2em;
+    padding: 5px 15px;
+  }
+
+  .menu a {
+    font-size: 1.1em;
+    margin: 0.4em;
+    padding: 10px 15px;
+  }
+
+  .hamb {
+    padding: 20px 12px;
+  }
+
+  .hamb-line {
+    width: 20px;
+  }
+}
+
+/* Melhorias para telas ultra pequenas - menu hamburguer abaixo do logo */
+@media (max-width: 240px) {
+  .header {
+    padding: 0.8em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .logo {
+    font-size: 1.8em;
+    padding: 4px 12px;
+    margin-bottom: 8px;
+  }
+
+  .hamb {
+    float: none;
+    position: static;
+    padding: 15px 20px;
+    margin: 0 auto;
+    border-radius: 12px;
+    min-width: 60px;
+    min-height: 50px;
+  }
+
+  .hamb-line {
+    width: 18px;
+  }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  .menu a {
+    font-size: 1em;
+    margin: 0.3em;
+    padding: 8px 12px;
+    min-height: 40px;
+  }
+}
+
+/* Melhorias para telas grandes */
+@media (min-width: 1920px) {
+  .content {
+    max-width: 1400px;
+  }
+
+  .logo {
+    font-size: 4.5em;
+  }
+
+  .menu a {
+    font-size: 1.6em;
+    padding: 18px 30px;
+  }
+
+  .hamb {
+    padding: 45px 25px;
+  }
+}
+
+/* Estados de foco aprimorados para acessibilidade */
+button:focus,
+a:focus,
+input:focus {
+  outline: 3px solid var(--accent-magenta);
+  outline-offset: 2px;
+}
+
+/* Loading state para melhor UX */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
