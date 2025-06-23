@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <!-- DEVELOP VERSION - $(date) -->
+    <meta charset="utf-8" />
+    <meta name="description" content="Ateliê Dmax - Especialistas em artesanato em MDF, bordados eletrônicos e produtos personalizados desde 2017. Enxovais de bebê, convites, batizados e ocasiões especiais. Indaiatuba/SP.">
+    <meta name="keywords" content="artesanato em mdf, bordado eletrônico, enxoval de bebê, convites personalizados, ateliê artesanal, batizado, indaiatuba sp">
+    <link rel="canonical" href="https://ateliedmax.com.br">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[DEVELOP] Ateliê Dmax - Artesanato em MDF, Bordados Eletrônicos e Produtos Personalizados</title>
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Ateliê Dmax - Artesanato em MDF e Bordados Eletrônicos">
+    <meta property="og:description" content="Produtos personalizados únicos para momentos especiais. Enxovais, batizados, convites e artesanato em MDF.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ateliedmax.com.br">
+    <meta property="og:image" content="https://ateliedmax.com.br/img/logo_003.jpeg">
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Ateliê Dmax",
+        "description": "Ateliê especializado em artesanato em MDF, bordados eletrônicos e produtos personalizados",
+        "foundingDate": "2017",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Indaiatuba",
+            "addressRegion": "SP",
+            "addressCountry": "BR"
+        },
+        "url": "https://ateliedmax.com.br",
+        "logo": "https://ateliedmax.com.br/img/logo_003.jpeg",
+        "sameAs": [
+            "https://www.instagram.com/ateliedmax/",
+            "https://api.whatsapp.com/send?phone=551198338-7957"
+        ],
+        "priceRange": "$$",
+        "serviceArea": "Brasil"
+    }
+    </script>
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/font.css" as="style">
+    <link rel="preload" href="css/main.css" as="style">
+    
+    <!-- Vue.js 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="fonts/fontawesome/fontawesome-free-6.5.1-web/css/all.min.css">
+    <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "572dvn67x9");
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="#" onclick="loadProducts(); return false;" class="logo" aria-label="Ir para página inicial">Ateliê Dmax</a>
+            <input class="side-menu" type="checkbox" id="side-menu"
+                onchange="document.body.classList.toggle('menu-open', this.checked)" />
+            <label class="hamb" for="side-menu" aria-label="Abrir menu lateral">
+                <span class="hamb-line"></span>
+            </label>
+
+            <nav class="nav">
+                <ul class="menu">
+                    <li><a href="https://www.instagram.com/ateliedmax/" class="button" aria-label="Seguir no Instagram" target="_blank" rel="noopener"><i
+                                class="fa-brands fa-instagram"></i>Instagram</a></li>
+                    <li><a href="https://api.whatsapp.com/send?phone=551198338-7957&text=Olá! Gostaria de conhecer mais sobre os produtos do Ateliê Dmax" class="button" aria-label="Falar conosco pelo WhatsApp" target="_blank" rel="noopener"><i
+                                class="fa-brands fa-whatsapp"></i>WhatsApp</a></li>
+                    <li><a href="https://s.shopee.com.br/8paEGC2rkV?share_channel_code=1" class="button" aria-label="Visitar nossa loja online no Shopee" target="_blank" rel="noopener"><i
+                                class="fa-solid fa-shopping-cart"></i>Loja Online</a></li>
+                    <li><a href="#" onclick="loadAboutPage(); return false;" class="button" aria-label="Sobre nós - Conheça nossa história"><i
+                                class="fa-solid fa-book-open-reader"></i>Sobre nós</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="content">
+            <object data="src/content/products/products.html" type="text/html" id="productObject">
+                <p>O conteúdo não pôde ser carregado. Por favor, tente novamente mais tarde.</p>
+            </object>
+        </main>
+
+        <script src="js/main.js"></script>
+    </div>
+</body>
+
+</html>
