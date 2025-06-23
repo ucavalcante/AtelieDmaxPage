@@ -1,0 +1,503 @@
+html,
+body {
+  width: inherit;
+  height: inherit;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Estilos para o componente Vue.js */
+.product-gallery {
+  width: 100%;
+  height: 100%;
+  padding-top: 15px;
+}
+
+/* Animações para rotação automática de imagens */
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.category-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out, transform 0.3s ease;
+  opacity: 1;
+}
+
+.category-image.image-transitioning {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Transições Vue.js para troca de imagens */
+.image-fade-enter-active,
+.image-fade-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.image-fade-enter,
+.image-fade-leave-to {
+  opacity: 0;
+}
+
+/* Indicadores de imagem */
+.image-indicator {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.indicator-dots {
+  display: flex;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: var(--accent-color, #FC01CE);
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(252, 1, 206, 0.6);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.1);
+}
+
+/* Estados de loading e erro */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  color: var(--primary-purple, #8B4F9F);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--secondary-pink, #CF94C2);
+  border-top: 4px solid var(--primary-purple, #8B4F9F);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--error-red, #d32f2f);
+}
+
+.retry-btn {
+  background-color: var(--secondary-pink, #CF94C2);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.retry-btn:hover {
+  background-color: var(--primary-purple, #8B4F9F);
+}
+
+.retry-btn:focus {
+  outline: 2px solid var(--accent-magenta, #FC01CE);
+  outline-offset: 2px;
+}
+
+/* Container de cards melhorado */
+.card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 1vw;
+  gap: 1rem;
+}
+
+/* Cards responsivos */
+.card {
+  min-width: 280px;
+  max-width: 400px;
+  background-color: var(--secondary-pink, #CF94C2);
+  color: white;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  margin: 1vw;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid rgba(252, 1, 206, 0.3);
+  cursor: pointer;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-0.50rem);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card:focus {
+  outline: 3px solid var(--accent-magenta, #FC01CE);
+  outline-offset: 2px;
+}
+
+/* Container de imagem */
+.crop {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.category-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .category-image {
+  transform: scale(1.05);
+}
+
+/* Fallback themes (mantendo compatibilidade) */
+.fallback-theme {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Títulos e descrições */
+.card h5 {
+  text-align: center;
+  font-family: 'zt-gatha', serif;
+  font-size: 2.5rem;
+  margin: 1rem;
+  font-weight: 600;
+}
+
+.category-description {
+  text-align: center;
+  font-size: 1rem;
+  padding: 0 1rem 1.5rem;
+  line-height: 1.4;
+  opacity: 0.9;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 800px) {
+  .card {
+    min-width: 250px;
+    margin: 0.5vw;
+  }
+
+  .crop {
+    height: 250px;
+  }
+
+  .card h5 {
+    font-size: 2rem;
+    margin: 0.75rem;
+  }
+
+  .category-description {
+    font-size: 0.9rem;
+    padding: 0 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    margin: 0 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .card {
+    min-width: 200px;
+  }
+
+  .crop {
+    height: 200px;
+  }
+
+  .card h5 {
+    font-size: 1.8rem;
+    margin: 0.5rem;
+  }
+}
+
+/* Estilos dos temas existentes (fallback) */
+
+.theme1 {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: theme1 30s infinite cubic-bezier(0.075, 0.9, 0.165, 1);
+}
+
+/* enxovao do bebe */
+@keyframes theme1 {
+
+  0%,
+  10% {
+    background-image: url(/img/products/img013.jpeg);
+  }
+
+  70% {
+    background-image: url(/img/products/img014.jpeg);
+  }
+
+  100% {
+    background-image: url(/img/products/img024.jpeg);
+  }
+
+}
+
+.theme2 {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: theme2 30s infinite cubic-bezier(0.075, 0.9, 0.165, 1);
+}
+
+/* batizado */
+@keyframes theme2 {
+
+  0%,
+  20% {
+    background-image: url(/img/products/img002.jpeg);
+  }
+
+  25% {
+    background-image: url(/img/products/img021.jpeg);
+  }
+
+  50% {
+    background-image: url(/img/products/img022.jpeg);
+  }
+
+  100% {
+    background-image: url(/img/products/img023.jpeg);
+  }
+
+}
+
+.theme3 {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: theme3 30s infinite cubic-bezier(0.075, 0.9, 0.165, 1);
+}
+
+/* caixa convite */
+@keyframes theme3 {
+
+  0%,
+  10% {
+    background-image: url(/img/products/img001.jpeg);
+  }
+
+  20% {
+    background-image: url(/img/products/img004.jpeg);
+  }
+
+  40% {
+    background-image: url(/img/products/img006.jpeg);
+  }
+
+  60% {
+    background-image: url(/img/products/img012.jpeg);
+  }
+
+  100% {
+    background-image: url(/img/products/img020.jpeg);
+  }
+
+}
+
+.theme4 {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: theme4 30s infinite cubic-bezier(0.075, 0.9, 0.165, 1);
+}
+
+/* ocasioes especiais */
+@keyframes theme4 {
+
+  0%,
+  30% {
+    background-image: url(/img/products/img018.jpeg);
+  }
+
+  70% {
+    background-image: url(/img/products/img016.jpeg);
+  }
+
+  100% {
+    background-image: url(/img/products/img017.jpeg);
+  }
+}
+
+@media only screen and (max-width:1920px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+@media only screen and (min-width: 801px) and (max-width:1200px) {
+  .container {
+    max-width: 1000px;
+  }
+
+  .card-container {
+    justify-content: center;
+    gap: 20px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .card {
+    width: 340px;
+    max-width: 340px;
+    min-width: 340px;
+    min-height: 420px;
+    margin: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .crop {
+    width: 100%;
+    height: 280px;
+    flex-shrink: 0;
+  }
+
+  .card h5 {
+    font-size: 2rem;
+    margin: 1rem;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width:800px) {
+  .container {
+    max-width: 100vw;
+  }
+
+  .content {
+    margin: 0;
+  }
+
+  .card,
+  .theme1,
+  .theme2,
+  .theme3,
+  .theme4 {
+    width: 90vw;
+  }
+
+}
+
+/* Melhoria na acessibilidade */
+.card:focus .image-indicator {
+  opacity: 1;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent-color, #FC01CE);
+  outline-offset: 2px;
+}
+
+/* Prefers-reduced-motion: respeitar preferências do usuário */
+@media (prefers-reduced-motion: reduce) {
+  .image-fade-enter-active,
+  .image-fade-leave-active {
+    transition: none;
+  }
+  
+  .category-image {
+    transition: none;
+  }
+  
+  .dot {
+    transition: none;
+  }
+  
+  /* Desabilitar animação automática via CSS */
+  .product-gallery {
+    --animation-disabled: true;
+  }
+}
+
+/* Estados de loading para imagens */
+.category-image[loading="lazy"] {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

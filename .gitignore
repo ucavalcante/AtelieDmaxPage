@@ -1,2 +1,18 @@
 /node_modules
 .*swp
+/fonts/fontawesome
+/.vscode/
+.hintrc
+
+# AI Workspace - arquivos temporários da IA
+/.ai-workspace/
+*.ai-temp
+*.ai-backup
+
+# TypeScript compilation
+/ts/*.js
+/ts/*.js.map
+
+# Build artifacts
+/build/
+/dist/

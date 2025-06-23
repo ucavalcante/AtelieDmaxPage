@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "lib": ["ES2018", "DOM"],
+    "module": "ES2015",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./js",
+    "rootDir": "./ts",
+    "declaration": false,
+    "sourceMap": false,
+    "removeComments": true
+  },
+  "include": [
+    "ts/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    ".ai-workspace",
+    "js",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}

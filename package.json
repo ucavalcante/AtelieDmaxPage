@@ -1,16 +1,33 @@
 {
   "name": "ateliedmaxpage",
-  "version": "0.0.2",
-  "description": "A portiflio page for github pages",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "Portfolio website for Ateliê Dmax - artesanato em MDF, costura e bordados eletrônicos. Featuring TypeScript/Vue.js architecture with responsive design and auto-image detection.",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc",
+    "build:watch": "npx tsc --watch",
+    "check": "npx tsc --noEmit",
+    "dev": "npm run build:watch",
+    "build:clean": "find js/ -name '*.js' ! -name '.gitkeep' -delete && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ucavalcante/AtelieDmaxPage.git"
   },
-  "author": "",
+  "author": "Ulises Cavalcante",
+  "keywords": [
+    "artesanato",
+    "mdf",
+    "bordado eletrônico",
+    "costura",
+    "enxoval bebê",
+    "convites personalizados",
+    "typescript",
+    "vue.js",
+    "portfolio",
+    "github-pages"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ucavalcante/AtelieDmaxPage/issues"
@@ -18,5 +35,9 @@
   "homepage": "https://github.com/ucavalcante/AtelieDmaxPage#readme",
   "dependencies": {
     "bootstrap": "^4.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
   }
 }
