@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/ucavalcante/AtelieDmaxPage#readme",
   "dependencies": {
-    "bootstrap": "^4.4.1"
+    "bootstrap": "^5.0.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
