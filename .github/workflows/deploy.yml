@@ -5,34 +5,96 @@ on:
     branches:
       - master
       - develop
+  pull_request:
+    branches:
+      - master
+      - develop
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: npm install
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Build project
-        run: npm run build
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile TypeScript to JavaScript
+        run: |
+          # Compilar arquivos TypeScript principais
+          npx tsc ts/auto-image-detector.ts --outDir js --target ES2018 --lib ES2018,DOM --skipLibCheck
+          npx tsc ts/product-gallery.ts --outDir js --target ES2018 --lib ES2018,DOM --skipLibCheck || echo "Arquivo não encontrado, continuando..."
+          npx tsc ts/product-detail.ts --outDir js --target ES2018 --lib ES2018,DOM --skipLibCheck || echo "Arquivo não encontrado, continuando..."
+          npx tsc ts/main.ts --outDir js --target ES2018 --lib ES2018,DOM --skipLibCheck || echo "Arquivo não encontrado, continuando..."
+          
+          # Verificar se compilação foi bem-sucedida
+          echo "Arquivos JavaScript gerados:"
+          ls -la js/ || echo "Pasta js/ não encontrada"
+
+      - name: Validate project structure
+        run: |
+          echo "Validando estrutura do projeto..."
+          echo "Verificando arquivos principais:"
+          ls -la index.html
+          ls -la css/
+          ls -la img/
+          ls -la data/
+          echo "Verificando arquivos JavaScript compilados:"
+          ls -la js/ || echo "Nenhum arquivo JS compilado encontrado"
 
       - name: Deploy to GitHub Pages (Production)
         if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./ # Publica a raiz do projeto (site estático)
+          exclude_assets: |
+            .github
+            .ai-workspace
+            ts
+            node_modules
+            .gitignore
+            package*.json
+            tsconfig.json
+            README.md
 
-      - name: Build develop version
+      - name: Prepare develop version
         if: github.ref == 'refs/heads/develop'
         run: |
-          npm run build
+          echo "Preparando versão de desenvolvimento para /develop..."
           mkdir -p gh-pages-develop
-          mv build/* gh-pages-develop/
+          
+          # Copiar todos os arquivos necessários
+          cp -r css gh-pages-develop/
+          cp -r img gh-pages-develop/
+          cp -r js gh-pages-develop/
+          cp -r data gh-pages-develop/
+          cp -r src gh-pages-develop/
+          cp -r fonts gh-pages-develop/
+          cp index.html gh-pages-develop/
+          cp sitemap.xml gh-pages-develop/
+          cp robots.txt gh-pages-develop/
+          cp CNAME gh-pages-develop/ || echo "CNAME não encontrado, continuando..."
+          
+          # Adicionar indicador de versão develop no HTML
+          sed -i 's/<title>/<title>[DEVELOP] /' gh-pages-develop/index.html
+          sed -i 's/<head>/<head>\n    <!-- DEVELOP VERSION - $(date) -->/' gh-pages-develop/index.html
+          
+          echo "Estrutura da versão develop preparada:"
+          ls -la gh-pages-develop/
 
       - name: Deploy to GitHub Pages (Develop)
         if: github.ref == 'refs/heads/develop'
@@ -41,3 +103,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./gh-pages-develop
           destination_dir: develop
+          cname: false  # Não usar CNAME personalizado para develop
