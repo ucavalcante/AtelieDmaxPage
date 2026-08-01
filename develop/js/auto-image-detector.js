@@ -6,8 +6,6 @@ class AutoImageDetector {
         const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
         const prefix = isDevelop ? '/develop' : '';
         this.basePath = `${prefix}/img/products/`;
-        this.maxRetries = 20;
-        this.timeoutMs = 1500;
         this.knownCategories = this.getDefaultCategories();
     }
     async loadCategoriesFromJson() {
@@ -134,6 +132,11 @@ class AutoImageDetector {
         return [];
     }
     async detectImagesFromDirectoryListing(folderName) {
+        const jsonCategory = this.knownCategories.find((c) => c.folder === folderName || c.folder === folderName.toLowerCase());
+        if (jsonCategory && Array.isArray(jsonCategory.images) && jsonCategory.images.length > 0) {
+            console.log(`✅ products.json retornou ${jsonCategory.images.length} imagens para ${folderName}`);
+            return jsonCategory.images;
+        }
         const githubApiImages = await this.detectImagesFromGitHubAPI(folderName);
         if (githubApiImages.length > 0) {
             console.log(`✅ GitHub Contents API retornou ${githubApiImages.length} imagens para ${folderName}`);
@@ -182,82 +185,6 @@ class AutoImageDetector {
             console.warn(`GitHub API indisponível para ${folderName}:`, e);
             return [];
         }
-    }
-    getImagePatterns() {
-        return [
-            {
-                name: 'img001-999.jpeg',
-                generator: (i) => `img${String(i).padStart(3, '0')}.jpeg`
-            },
-            {
-                name: 'img001-999.jpg',
-                generator: (i) => `img${String(i).padStart(3, '0')}.jpg`
-            },
-            {
-                name: 'img1-99.jpeg',
-                generator: (i) => `img${i}.jpeg`
-            },
-            {
-                name: 'img1-99.jpg',
-                generator: (i) => `img${i}.jpg`
-            },
-            {
-                name: 'image1-99.jpeg',
-                generator: (i) => `image${i}.jpeg`
-            },
-            {
-                name: 'image1-99.jpg',
-                generator: (i) => `image${i}.jpg`
-            },
-            {
-                name: 'produto1-99.jpeg',
-                generator: (i) => `produto${i}.jpeg`
-            },
-            {
-                name: 'produto1-99.jpg',
-                generator: (i) => `produto${i}.jpg`
-            }
-        ];
-    }
-    async testImagePattern(folderName, pattern) {
-        const foundImages = [];
-        let consecutiveMisses = 0;
-        const maxConsecutiveMisses = 3;
-        console.log(`Testando até ${this.maxRetries} imagens com padrão ${pattern.name}...`);
-        for (let i = 1; i <= this.maxRetries; i++) {
-            const imageName = pattern.generator(i);
-            const imagePath = `${this.basePath}${folderName}/${imageName}`;
-            if (await this.imageExists(imagePath)) {
-                foundImages.push(imageName);
-                consecutiveMisses = 0;
-                console.log(`Encontrada: ${imageName}`);
-            }
-            else {
-                consecutiveMisses++;
-                if (foundImages.length > 0 && consecutiveMisses >= maxConsecutiveMisses) {
-                    console.log(`Parando busca após ${consecutiveMisses} falhas consecutivas`);
-                    break;
-                }
-            }
-        }
-        return foundImages;
-    }
-    async imageExists(imagePath) {
-        return new Promise((resolve) => {
-            const img = new Image();
-            const timeoutId = setTimeout(() => {
-                resolve(false);
-            }, this.timeoutMs);
-            img.onload = () => {
-                clearTimeout(timeoutId);
-                resolve(true);
-            };
-            img.onerror = () => {
-                clearTimeout(timeoutId);
-                resolve(false);
-            };
-            img.src = imagePath;
-        });
     }
     async getDetectionStats() {
         await this.loadCategoriesFromJson();

@@ -99,9 +99,14 @@ class MainNavigationController {
         const { createApp, reactive } = window.Vue;
         this.vueState = reactive({ currentPage: 'products' });
         const state = this.vueState;
+        const self = this;
         this.vueApp = createApp({
             setup() {
-                return { state };
+                return {
+                    state,
+                    navigateToAbout: () => self.loadAboutPage(),
+                    navigateToProducts: () => self.loadProducts()
+                };
             }
         }).mount('#content');
     }
