@@ -104,6 +104,21 @@ class AutoImageDetector {
         console.log(`Auto-detecção concluída: ${categories.length} categorias ativas`);
         return categories;
     }
+    async detectImagesForCategory(folderName) {
+        await this.loadCategoriesFromJson();
+        const config = this.knownCategories.find(c => c.folder === folderName || c.folder === folderName.toLowerCase());
+        const images = await this.detectImagesInCategory(folderName);
+        if (images.length === 0)
+            return null;
+        return {
+            id: folderName,
+            name: config ? config.name : folderName,
+            description: config ? config.description : '',
+            folder: folderName,
+            images: images,
+            keywords: config ? config.keywords : []
+        };
+    }
     async detectImagesInCategory(folderName) {
         console.log(`Analisando pasta: ${folderName}`);
         const listedImages = await this.detectImagesFromDirectoryListing(folderName);
