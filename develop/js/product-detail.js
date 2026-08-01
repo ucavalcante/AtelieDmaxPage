@@ -15,9 +15,11 @@ const ProductDetailApp = {
             imageDescriptions: {},
             currentImageIndex: 0
         });
+        const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+        const prefix = isDevelop ? '/develop' : '';
         const settings = {
-            basePath: '/img/products/',
-            fallbackImage: '/img/products/placeholder.jpg',
+            basePath: `${prefix}/img/products/`,
+            fallbackImage: `${prefix}/img/products/placeholder.jpg`,
             lazyLoading: true,
             imageFormats: ['webp', 'jpeg', 'jpg', 'png'],
             autoDetector: null
