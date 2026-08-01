@@ -124,6 +124,11 @@ class AutoImageDetector {
         return [];
     }
     async detectImagesFromDirectoryListing(folderName) {
+        const githubApiImages = await this.detectImagesFromGitHubAPI(folderName);
+        if (githubApiImages.length > 0) {
+            console.log(`✅ GitHub Contents API retornou ${githubApiImages.length} imagens para ${folderName}`);
+            return githubApiImages;
+        }
         const folderUrl = `${this.basePath}${folderName}/`;
         try {
             const response = await fetch(folderUrl);
@@ -144,6 +149,27 @@ class AutoImageDetector {
         }
         catch (e) {
             console.warn(`Directory listing não disponível para ${folderName}:`, e);
+            return [];
+        }
+    }
+    async detectImagesFromGitHubAPI(folderName) {
+        const isDevelop = window.location.pathname.includes('/develop');
+        const ref = isDevelop ? 'develop' : 'master';
+        const apiUrl = `https://api.github.com/repos/ucavalcante/AtelieDmaxPage/contents/img/products/${folderName}?ref=${ref}`;
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok)
+                return [];
+            const items = await response.json();
+            if (!Array.isArray(items))
+                return [];
+            const imageExtensions = ['.jpeg', '.jpg', '.png', '.webp'];
+            return items
+                .filter((item) => item.type === 'file' && imageExtensions.some(ext => item.name.toLowerCase().endsWith(ext)))
+                .map((item) => item.name);
+        }
+        catch (e) {
+            console.warn(`GitHub API indisponível para ${folderName}:`, e);
             return [];
         }
     }
