@@ -179,15 +179,22 @@ class AutoImageDetector {
   }
 
   /**
-   * Detecta imagens em uma categoria específica
+   * Detecta imagens em uma categoria específica via Directory Listing ou Fallback
    */
   async detectImagesInCategory(folderName: string): Promise<string[]> {
     console.log(`Analisando pasta: ${folderName}`);
     
+    // Tentar ler a lista real de arquivos via Directory Listing / API
+    const listedImages = await this.detectImagesFromDirectoryListing(folderName);
+    if (listedImages.length > 0) {
+      console.log(`✅ Directory Listing/API encontrou ${listedImages.length} imagens em ${folderName}`);
+      return listedImages;
+    }
+
+    // Fallback: Testar padrões sequenciais se o diretório não listar
     const patterns = this.getImagePatterns();
-    
     for (const pattern of patterns) {
-      console.log(`Testando padrão: ${pattern.name}`);
+      console.log(`Testando padrão sequencial: ${pattern.name}`);
       const images = await this.testImagePattern(folderName, pattern);
       
       if (images.length > 0) {
@@ -199,6 +206,38 @@ class AutoImageDetector {
     console.log(`Nenhum padrão funcionou para ${folderName}`);
     return [];
   }
+
+  /**
+   * Lê a lista real de imagens enviando um fetch para a pasta (Directory Index HTML)
+   */
+  private async detectImagesFromDirectoryListing(folderName: string): Promise<string[]> {
+    const folderUrl = `${this.basePath}${folderName}/`;
+    try {
+      const response = await fetch(folderUrl);
+      if (!response.ok) return [];
+      
+      const html = await response.text();
+      // Extrair todos os links de imagens (.jpeg, .jpg, .png, .webp) da listagem de diretório
+      const imgRegex = /href=["']([^"']+\.(?:jpeg|jpg|png|webp))["']/gi;
+      const foundFiles: Set<string> = new Set();
+      let match;
+      
+      while ((match = imgRegex.exec(html)) !== null) {
+        const fullPath = match[1];
+        // Pegar apenas o nome do arquivo (basename)
+        const filename = fullPath.split('/').pop();
+        if (filename && !filename.startsWith('.')) {
+          foundFiles.add(filename);
+        }
+      }
+      
+      return Array.from(foundFiles);
+    } catch (e) {
+      console.warn(`Directory listing não disponível para ${folderName}:`, e);
+      return [];
+    }
+  }
+
 
   /**
    * Define padrões de nomenclatura

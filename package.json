@@ -34,10 +34,10 @@
   },
   "homepage": "https://github.com/ucavalcante/AtelieDmaxPage#readme",
   "dependencies": {
-    "bootstrap": "^5.0.0"
+    "bootstrap": "^5.3.8"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "@types/node": "^20.0.0"
+    "@types/node": "^26.1.2",
+    "typescript": "^7.0.2"
   }
 }
