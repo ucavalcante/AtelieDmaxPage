@@ -179,6 +179,27 @@ class AutoImageDetector {
   }
 
   /**
+   * Adaptador para compatibilidade com a página de detalhes do produto (product-detail.ts)
+   */
+  async detectImagesForCategory(folderName: string): Promise<DetectedCategory | null> {
+    await this.loadCategoriesFromJson();
+    
+    const config = this.knownCategories.find(c => c.folder === folderName || c.folder === folderName.toLowerCase());
+    const images = await this.detectImagesInCategory(folderName);
+    
+    if (images.length === 0) return null;
+
+    return {
+      id: folderName,
+      name: config ? config.name : folderName,
+      description: config ? config.description : '',
+      folder: folderName,
+      images: images,
+      keywords: config ? config.keywords : []
+    };
+  }
+
+  /**
    * Detecta imagens em uma categoria específica via Directory Listing ou Fallback
    */
   async detectImagesInCategory(folderName: string): Promise<string[]> {
