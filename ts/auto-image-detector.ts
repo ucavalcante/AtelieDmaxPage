@@ -222,10 +222,17 @@ class AutoImageDetector {
   }
 
   /**
-   * Lê a lista real de imagens enviando um fetch para a pasta (Directory Index HTML ou GitHub API)
+   * Lê a lista real de imagens enviando um fetch para a pasta (products.json, GitHub API ou Directory Index)
    */
   private async detectImagesFromDirectoryListing(folderName: string): Promise<string[]> {
-    // 1. Tentar obter via GitHub Contents API (para GitHub Pages online)
+    // 1. Tentar ler as imagens da categoria diretamente do manifesto products.json (carregado dinamicamente no build)
+    const jsonCategory = this.knownCategories.find((c: any) => c.folder === folderName || c.folder === folderName.toLowerCase());
+    if (jsonCategory && Array.isArray((jsonCategory as any).images) && (jsonCategory as any).images.length > 0) {
+      console.log(`✅ products.json retornou ${(jsonCategory as any).images.length} imagens para ${folderName}`);
+      return (jsonCategory as any).images;
+    }
+
+    // 2. Tentar obter via GitHub Contents API (para GitHub Pages online)
     const githubApiImages = await this.detectImagesFromGitHubAPI(folderName);
     if (githubApiImages.length > 0) {
       console.log(`✅ GitHub Contents API retornou ${githubApiImages.length} imagens para ${folderName}`);

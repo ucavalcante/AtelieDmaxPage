@@ -134,6 +134,11 @@ class AutoImageDetector {
         return [];
     }
     async detectImagesFromDirectoryListing(folderName) {
+        const jsonCategory = this.knownCategories.find((c) => c.folder === folderName || c.folder === folderName.toLowerCase());
+        if (jsonCategory && Array.isArray(jsonCategory.images) && jsonCategory.images.length > 0) {
+            console.log(`✅ products.json retornou ${jsonCategory.images.length} imagens para ${folderName}`);
+            return jsonCategory.images;
+        }
         const githubApiImages = await this.detectImagesFromGitHubAPI(folderName);
         if (githubApiImages.length > 0) {
             console.log(`✅ GitHub Contents API retornou ${githubApiImages.length} imagens para ${folderName}`);
