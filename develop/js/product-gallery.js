@@ -3,12 +3,16 @@ const ProductGalleryVue3 = {
     setup() {
         const state = Vue.reactive({
             categories: [],
-            settings: {
-                basePath: '/img/products/',
-                fallbackImage: '/img/products/placeholder.jpg',
-                lazyLoading: true,
-                imageFormats: ['webp', 'jpeg', 'jpg', 'png']
-            },
+            settings: (() => {
+                const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+                const prefix = isDevelop ? '/develop' : '';
+                return {
+                    basePath: `${prefix}/img/products/`,
+                    fallbackImage: `${prefix}/img/products/placeholder.jpg`,
+                    lazyLoading: true,
+                    imageFormats: ['webp', 'jpeg', 'jpg', 'png']
+                };
+            })(),
             loading: true,
             error: null,
             currentImageIndexes: {},
