@@ -3,7 +3,9 @@ var _a;
 class AutoImageDetector {
     constructor() {
         this.categoriesLoaded = false;
-        this.basePath = '/img/products/';
+        const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+        const prefix = isDevelop ? '/develop' : '';
+        this.basePath = `${prefix}/img/products/`;
         this.maxRetries = 20;
         this.timeoutMs = 1500;
         this.knownCategories = this.getDefaultCategories();
@@ -13,7 +15,9 @@ class AutoImageDetector {
             return;
         try {
             console.log('Tentando carregar categorias do products.json...');
-            const response = await fetch('/data/products.json');
+            const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+            const jsonUrl = isDevelop ? '/develop/data/products.json' : '/data/products.json';
+            const response = await fetch(jsonUrl);
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }

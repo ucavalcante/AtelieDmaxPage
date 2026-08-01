@@ -57,10 +57,13 @@ const ProductDetailApp = {
             currentImageIndex: 0
         });
 
-        // Configurações
+        // Configurações com suporte a subpasta (/develop)
+        const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+        const prefix = isDevelop ? '/develop' : '';
+
         const settings: ProductSettings = {
-            basePath: '/img/products/',
-            fallbackImage: '/img/products/placeholder.jpg',
+            basePath: `${prefix}/img/products/`,
+            fallbackImage: `${prefix}/img/products/placeholder.jpg`,
             lazyLoading: true,
             imageFormats: ['webp', 'jpeg', 'jpg', 'png'],
             autoDetector: null
