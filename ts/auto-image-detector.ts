@@ -208,9 +208,17 @@ class AutoImageDetector {
   }
 
   /**
-   * Lê a lista real de imagens enviando um fetch para a pasta (Directory Index HTML)
+   * Lê a lista real de imagens enviando um fetch para a pasta (Directory Index HTML ou GitHub API)
    */
   private async detectImagesFromDirectoryListing(folderName: string): Promise<string[]> {
+    // 1. Tentar obter via GitHub Contents API (para GitHub Pages online)
+    const githubApiImages = await this.detectImagesFromGitHubAPI(folderName);
+    if (githubApiImages.length > 0) {
+      console.log(`✅ GitHub Contents API retornou ${githubApiImages.length} imagens para ${folderName}`);
+      return githubApiImages;
+    }
+
+    // 2. Tentar obter via Directory Listing HTML (para servidor de dev local)
     const folderUrl = `${this.basePath}${folderName}/`;
     try {
       const response = await fetch(folderUrl);
@@ -224,7 +232,6 @@ class AutoImageDetector {
       
       while ((match = imgRegex.exec(html)) !== null) {
         const fullPath = match[1];
-        // Pegar apenas o nome do arquivo (basename)
         const filename = fullPath.split('/').pop();
         if (filename && !filename.startsWith('.')) {
           foundFiles.add(filename);
@@ -237,6 +244,33 @@ class AutoImageDetector {
       return [];
     }
   }
+
+  /**
+   * Consulta a API REST pública do GitHub em tempo real para obter arquivos da pasta
+   */
+  private async detectImagesFromGitHubAPI(folderName: string): Promise<string[]> {
+    // Detectar a branch ativa a partir da URL (develop vs master)
+    const isDevelop = window.location.pathname.includes('/develop');
+    const ref = isDevelop ? 'develop' : 'master';
+    const apiUrl = `https://api.github.com/repos/ucavalcante/AtelieDmaxPage/contents/img/products/${folderName}?ref=${ref}`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) return [];
+      
+      const items = await response.json();
+      if (!Array.isArray(items)) return [];
+
+      const imageExtensions = ['.jpeg', '.jpg', '.png', '.webp'];
+      return items
+        .filter((item: any) => item.type === 'file' && imageExtensions.some(ext => item.name.toLowerCase().endsWith(ext)))
+        .map((item: any) => item.name);
+    } catch (e) {
+      console.warn(`GitHub API indisponível para ${folderName}:`, e);
+      return [];
+    }
+  }
+
 
 
   /**
