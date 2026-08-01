@@ -106,9 +106,14 @@ class AutoImageDetector {
     }
     async detectImagesInCategory(folderName) {
         console.log(`Analisando pasta: ${folderName}`);
+        const listedImages = await this.detectImagesFromDirectoryListing(folderName);
+        if (listedImages.length > 0) {
+            console.log(`✅ Directory Listing/API encontrou ${listedImages.length} imagens em ${folderName}`);
+            return listedImages;
+        }
         const patterns = this.getImagePatterns();
         for (const pattern of patterns) {
-            console.log(`Testando padrão: ${pattern.name}`);
+            console.log(`Testando padrão sequencial: ${pattern.name}`);
             const images = await this.testImagePattern(folderName, pattern);
             if (images.length > 0) {
                 console.log(`Padrão ${pattern.name} encontrou ${images.length} imagens`);
@@ -117,6 +122,30 @@ class AutoImageDetector {
         }
         console.log(`Nenhum padrão funcionou para ${folderName}`);
         return [];
+    }
+    async detectImagesFromDirectoryListing(folderName) {
+        const folderUrl = `${this.basePath}${folderName}/`;
+        try {
+            const response = await fetch(folderUrl);
+            if (!response.ok)
+                return [];
+            const html = await response.text();
+            const imgRegex = /href=["']([^"']+\.(?:jpeg|jpg|png|webp))["']/gi;
+            const foundFiles = new Set();
+            let match;
+            while ((match = imgRegex.exec(html)) !== null) {
+                const fullPath = match[1];
+                const filename = fullPath.split('/').pop();
+                if (filename && !filename.startsWith('.')) {
+                    foundFiles.add(filename);
+                }
+            }
+            return Array.from(foundFiles);
+        }
+        catch (e) {
+            console.warn(`Directory listing não disponível para ${folderName}:`, e);
+            return [];
+        }
     }
     getImagePatterns() {
         return [
