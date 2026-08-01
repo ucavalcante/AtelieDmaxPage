@@ -199,7 +199,6 @@ const ProductDetailApp = {
 
         const loadProductImages = async (productId: string): Promise<void> => {
             try {
-                // Verificar se o auto-detector está disponível
                 if ((window as any).autoDetector) {
                     console.log('Usando auto-detector para carregar imagens...');
                     
@@ -213,55 +212,12 @@ const ProductDetailApp = {
                     }
                 }
 
-                // Fallback: tentar imagens comuns
-                await loadImagesManually(productId);
+                throw new Error('Nenhuma imagem encontrada para este produto via API ou Diretório');
 
-            } catch (error) {
-                console.warn('Erro ao usar auto-detector, tentando carregamento manual:', error);
-                await loadImagesManually(productId);
+            } catch (error: any) {
+                console.error('Erro ao carregar imagens:', error);
+                state.error = error.message || 'Erro ao carregar imagens do produto';
             }
-        };
-
-        const loadImagesManually = async (productId: string): Promise<void> => {
-            const commonImageNames: string[] = [
-                'img001.jpeg', 'img002.jpeg', 'img003.jpeg', 'img004.jpeg', 'img005.jpeg',
-                'img006.jpeg', 'img007.jpeg', 'img008.jpeg', 'img009.jpeg', 'img010.jpeg',
-                'img011.jpeg', 'img012.jpeg', 'img013.jpeg', 'img014.jpeg', 'img015.jpeg',
-                'img016.jpeg', 'img017.jpeg', 'img018.jpeg', 'img019.jpeg', 'img020.jpeg',
-                'img021.jpeg', 'img022.jpeg', 'img023.jpeg', 'img024.jpeg', 'img025.jpeg'
-            ];
-
-            const validImages: string[] = [];
-            const folder = state.productData.folder;
-
-            for (const imageName of commonImageNames) {
-                const imageUrl = `${settings.basePath}${folder}/${imageName}`;
-                
-                try {
-                    const exists = await checkImageExists(imageUrl);
-                    if (exists) {
-                        validImages.push(imageName);
-                    }
-                } catch (error) {
-                    // Imagem não existe, continuar
-                }
-            }
-
-            if (validImages.length === 0) {
-                throw new Error('Nenhuma imagem encontrada para este produto');
-            }
-
-            state.images = validImages;
-            console.log(`✅ ${validImages.length} imagens carregadas manualmente para ${productId}`);
-        };
-
-        const checkImageExists = (imageUrl: string): Promise<boolean> => {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = () => resolve(true);
-                img.onerror = () => resolve(false);
-                img.src = imageUrl;
-            });
         };
 
         const loadImageDescriptions = async (productId: string): Promise<void> => {

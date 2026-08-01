@@ -29,6 +29,7 @@ interface NavigationOptions {
 class MainNavigationController {
   private productObject: HTMLObjectElement | null = null;
   private vueApp: any = null;
+  private vueState: any = null;
 
   constructor() {
     this.init();
@@ -61,8 +62,8 @@ class MainNavigationController {
     }
 
     // Update Vue state
-    if (this.vueApp) {
-      this.vueApp.currentPage = 'about';
+    if (this.vueState) {
+      this.vueState.currentPage = 'about';
     }
   }
 
@@ -83,8 +84,8 @@ class MainNavigationController {
     }
 
     // Update Vue state
-    if (this.vueApp) {
-      this.vueApp.currentPage = 'products';
+    if (this.vueState) {
+      this.vueState.currentPage = 'products';
     }
   }
 
@@ -179,19 +180,15 @@ class MainNavigationController {
       return;
     }
 
-    this.vueApp = new (window as any).Vue({
-      data: {
-        currentPage: 'products'
-      },
-      methods: {
-        navigateToAbout: () => {
-          this.loadAboutPage();
-        },
-        navigateToProducts: () => {
-          this.loadProducts();
-        }
+    const { createApp, reactive } = (window as any).Vue;
+    this.vueState = reactive({ currentPage: 'products' });
+    const state = this.vueState;
+
+    this.vueApp = createApp({
+      setup() {
+        return { state };
       }
-    }).$mount('#content');
+    }).mount('#content');
   }
 
   /**

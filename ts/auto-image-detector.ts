@@ -205,31 +205,19 @@ class AutoImageDetector {
   }
 
   /**
-   * Detecta imagens em uma categoria específica via Directory Listing ou Fallback
+   * Detecta imagens em uma categoria específica via Directory Listing ou GitHub API
    */
   async detectImagesInCategory(folderName: string): Promise<string[]> {
     console.log(`Analisando pasta: ${folderName}`);
     
-    // Tentar ler a lista real de arquivos via Directory Listing / API
+    // Ler a lista real de arquivos via Directory Listing (local) ou GitHub API (online)
     const listedImages = await this.detectImagesFromDirectoryListing(folderName);
     if (listedImages.length > 0) {
       console.log(`✅ Directory Listing/API encontrou ${listedImages.length} imagens em ${folderName}`);
       return listedImages;
     }
 
-    // Fallback: Testar padrões sequenciais se o diretório não listar
-    const patterns = this.getImagePatterns();
-    for (const pattern of patterns) {
-      console.log(`Testando padrão sequencial: ${pattern.name}`);
-      const images = await this.testImagePattern(folderName, pattern);
-      
-      if (images.length > 0) {
-        console.log(`Padrão ${pattern.name} encontrou ${images.length} imagens`);
-        return images;
-      }
-    }
-    
-    console.log(`Nenhum padrão funcionou para ${folderName}`);
+    console.log(`Nenhuma imagem listada pela API/Diretório para ${folderName}`);
     return [];
   }
 

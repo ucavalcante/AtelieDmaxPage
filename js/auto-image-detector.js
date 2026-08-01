@@ -130,16 +130,7 @@ class AutoImageDetector {
             console.log(`✅ Directory Listing/API encontrou ${listedImages.length} imagens em ${folderName}`);
             return listedImages;
         }
-        const patterns = this.getImagePatterns();
-        for (const pattern of patterns) {
-            console.log(`Testando padrão sequencial: ${pattern.name}`);
-            const images = await this.testImagePattern(folderName, pattern);
-            if (images.length > 0) {
-                console.log(`Padrão ${pattern.name} encontrou ${images.length} imagens`);
-                return images;
-            }
-        }
-        console.log(`Nenhum padrão funcionou para ${folderName}`);
+        console.log(`Nenhuma imagem listada pela API/Diretório para ${folderName}`);
         return [];
     }
     async detectImagesFromDirectoryListing(folderName) {
