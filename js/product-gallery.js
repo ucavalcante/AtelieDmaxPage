@@ -164,7 +164,9 @@ var ProductGalleryVue3 = {
         const navigateToCategory = (categoryId) => {
             const category = state.categories.find((cat) => cat.id === categoryId);
             if (category) {
-                const detailsUrl = `/src/content/products/details/${categoryId}.html`;
+                const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+                const prefix = isDevelop ? '/develop' : '';
+                const detailsUrl = `${prefix}/src/content/products/details/${categoryId}.html`;
                 window.location.href = detailsUrl;
             }
         };

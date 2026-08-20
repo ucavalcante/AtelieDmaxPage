@@ -344,7 +344,9 @@ const ProductDetailApp = {
                 window.history.back();
             } else {
                 // Ir para a página principal
-                window.location.href = '/';
+                const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+                const prefix = isDevelop ? '/develop/' : '/';
+                window.location.href = prefix;
             }
         };
 
