@@ -5,50 +5,40 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 ## [Unreleased]
 
-## [1.0.0] - 2025-06-22
+## [0.9.0] - 2026-08-20
 
 ### Added
 - **TypeScript Development Environment**: Complete TypeScript setup with tsconfig.json and automatic compilation to JavaScript
-- **GitHub Copilot Instructions**: Comprehensive development guidelines, coding standards, and Clean Architecture documentation
-- **Enhanced Product Gallery**: Vue.js 3 powered interactive product gallery with category filtering and auto-image detection
-- **Auto Image Detection System**: Automatic discovery and validation of product images with fallback mechanisms
-- **Detailed Product Descriptions**: JSON-based product descriptions for all categories (batizado, caixa-convite, enxoval-bebe, ocasioes-especiais, sapato-infantil)
-- **Complete Font System**: Professional typography with custom fonts (ZT Gatha, Glametrix, AdineKirnberg, Cigno, Elizabeth, etc.)
-- **SEO Optimization**: Schema.org markup for LocalBusiness, Open Graph tags, enhanced meta descriptions and keywords
-- **About Page**: Complete company information and history section with modern responsive design
-- **Accessibility Features**: WCAG 2.1 AA compliance improvements with proper aria-labels and semantic HTML
-- **Documentation**: Comprehensive project documentation including carousel and image systems in `/docs/`
-- **Build System**: NPM scripts for TypeScript compilation (`build`, `dev`, `check`, `build:clean`)
-- **VS Code Integration**: Extensions recommendations and tasks for TypeScript development workflow
-- **Product Detail Pages**: Individual product detail components with enhanced image galleries
-- **Responsive Navigation**: Mobile-first navigation with improved touch interactions
+- **Vue.js 3 Migration**: Complete migration from Vue 2 to Vue 3 Composition API (`createApp`, `reactive`, `computed`)
+- **Automated Image Manifest Generator**: Build-time Node.js script (`scripts/generate-manifest.js`) automatically discovering images across categories and generating `data/products.json`
+- **Playwright E2E Testing Suite**: 108 end-to-end tests written in TypeScript (`@playwright/test`) covering:
+  - SPA navigation, hamburger menu, and social links (`01-navigation.spec.ts`)
+  - Vue 3 card rendering, dynamic cover rotation, and indicator dots (`02-product-gallery.spec.ts`)
+  - Multi-image interactive carousels, thumbnails, keyboard navigation (Arrow keys), and back button across all 6 detail pages (`03-product-detail.spec.ts`)
+  - Zero-defect network health audit with 0 HTTP 404/403 errors and 0 console exceptions across all 9 site routes (`04-network-health.spec.ts`)
+- **CI/CD Pipeline with Test Gate**: GitHub Actions (`.github/workflows/deploy.yml`) running Playwright tests and blocking GitHub Pages deployment upon test failure
+- **Hybrid Licensing Model**: Canonical MIT License for source code + All Rights Reserved for photography (`img/products/`), embroidery designs, MDF crafts, and Ateliê Dmax trademarks
+- **FontAwesome 6 Assets**: Versioned FontAwesome 6.5.1 Free core webfonts and CSS
+- **Subfolder Pathing Support**: Dynamic `/develop` path prefixing for homologation and staging environments
 
 ### Changed
-- **Site Architecture**: Migrated from basic HTML to TypeScript/Vue.js component architecture
-- **Product Organization**: Restructured product images into organized category folders
-- **CSS Framework**: Modern CSS with CSS Grid, Flexbox, and custom properties
-- **Navigation System**: Improved responsive navigation with mobile-first approach
-- **Performance**: Optimized loading with preload hints and lazy loading
-- **Content Management**: Structured data approach with JSON-based content
+- **Site Architecture**: Modernized to TypeScript/Vue 3 Composition API architecture
+- **Manifest Architecture**: Replaced runtime brute-force image probes with build-time manifest generation
+- **Documentation**: Updated README.md and `/docs/` guides with test execution commands, architecture diagrams, and licensing details
 
 ### Fixed
-- **Cross-browser Compatibility**: Enhanced browser support and fallbacks
-- **Mobile Responsiveness**: Improved mobile layout and touch interactions
-- **Image Loading**: Robust image fallback system with placeholder images
-- **SEO Issues**: Proper meta tags, structured data, and semantic HTML
+- **Image Preservation**: Preserved category image arrays in `auto-image-detector.ts`
+- **Subpath Navigation**: Fixed cross-origin and root redirects in `product-gallery.ts` and `product-detail.ts`
+- **Network Errors**: Eliminated all 404 image and asset requests
 
 ---
-
-## [Released]
 
 ## [0.8.0] - 2021-10-30
 
 ### Changed
-
 - change url and icon from store to products
 
 ## [0.7.0] - 2021-01-29
-
 - add clarity tracking
 
 ## [0.6.0] - 2020-05-09
@@ -62,12 +52,10 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 ## [0.5.0] - 2020-05-09
 
 ### Added
-
 - favicon
 - shadow in irPraLoja button
 
 ### Fixed
-
 - css and js load order
 
 ## [0.4.1] - 2020-04-28
@@ -144,12 +132,12 @@ The format is based on [Keep a Changelog][Keep a Changelog] and this project adh
 
 <!-- Links -->
 [Keep a Changelog]: https://keepachangelog.com/
-[Semantic Versioning]: https://se2mver.org/
+[Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
-[Unreleased]: https://github.com/ucavalcante/AtelieDmaxPage/compare/1.0.0...HEAD
-[1.0.0]: https://github.com/ucavalcante/AtelieDmaxPage/releases/tag/1.0.0
-[Released]: https://github.com/ucavalcante/AtelieDmaxPage/releases
+[Unreleased]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.9.0...HEAD
+[0.9.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.8.0...v0.9.0
+[0.8.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.7.0...0.8.0
 [0.7.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.6.0..0.7.0
 [0.6.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.5.0..0.6.0
 [0.5.0]: https://github.com/ucavalcante/AtelieDmaxPage/compare/0.4.1..0.5.0

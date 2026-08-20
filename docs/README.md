@@ -112,10 +112,11 @@ Site estático portfolio para o Ateliê Dmax, especializado em artesanato em MDF
 ## 🛡️ Compatibilidade
 
 ### Tecnologias
-- **HTML5/CSS3/ES6+:** Padrões modernos
-- **Vue.js 2.6.14:** Framework reativo
-- **Font Awesome 6.5.1:** Ícones
-- **GitHub Pages:** Hospedagem estática
+- **HTML5 / CSS3 / TypeScript:** Padrões modernos e tipagem estática
+- **Vue.js 3 (Composition API):** Framework reativo moderno
+- **Playwright Test (@playwright/test):** Suíte E2E em TypeScript (108 cenários)
+- **Font Awesome 6.5.1:** Ícones vetorizados
+- **GitHub Actions & Pages:** CI/CD automatizado com test gate e hospedagem estática
 
 ### Navegadores
 - Chrome/Firefox/Safari/Edge (últimas 2 versões)
