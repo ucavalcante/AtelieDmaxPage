@@ -59,13 +59,15 @@ const ProductDetailApp = {
         };
         const loadProductData = async (productId) => {
             try {
-                const response = await fetch('/data/products.json');
+                const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+                const prefix = isDevelop ? '/develop' : '';
+                const response = await fetch(`${prefix}/data/products.json`);
                 if (response.ok) {
                     const data = await response.json();
-                    const category = data.categories.find((cat) => cat.id === productId);
+                    const category = data.categories.find((cat) => cat.id === productId || cat.folder === productId);
                     if (category) {
                         state.productData = {
-                            id: category.id,
+                            id: category.id || category.folder,
                             name: category.name,
                             description: category.description,
                             folder: category.folder || category.id

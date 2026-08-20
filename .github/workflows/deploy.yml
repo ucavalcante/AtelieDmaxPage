@@ -31,12 +31,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Tentar npm ci primeiro, se falhar usar npm install
           npm ci || npm install
 
-      - name: Compile TypeScript to JavaScript
+      - name: Compile TypeScript and Generate Manifest
         run: |
-          # Usar script build do package.json
           npm run build
           
           # Verificar se compilação foi bem-sucedida
@@ -54,6 +52,27 @@ jobs:
           echo "Verificando arquivos JavaScript compilados:"
           ls -la js/ || echo "Nenhum arquivo JS compilado encontrado"
 
+      # ========================================================
+      # SUÍTE DE TESTES AUTOMATIZADOS (PLAYWRIGHT)
+      # Se qualquer teste falhar, o deploy é bloqueado imediatamente
+      # ========================================================
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright Tests
+        run: npm test
+
+      - name: Upload Playwright Test Report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: test-results/html-report/
+          retention-days: 30
+
+      # ========================================================
+      # DEPLOY PRODUÇÃO (master)
+      # ========================================================
       - name: Deploy to GitHub Pages (Production)
         if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v4
@@ -65,12 +84,18 @@ jobs:
             .github
             .ai-workspace
             ts
+            tests
+            playwright.config.ts
+            test-results
             node_modules
             .gitignore
             package*.json
             tsconfig.json
             README.md
 
+      # ========================================================
+      # DEPLOY HOMOLOGAÇÃO (develop)
+      # ========================================================
       - name: Prepare develop version
         if: github.ref == 'refs/heads/develop'
         run: |
@@ -97,8 +122,6 @@ jobs:
           
           echo "Estrutura da versão develop preparada:"
           ls -la gh-pages-develop/
-          echo "Conteúdo do index.html:"
-          head -10 gh-pages-develop/index.html
 
       - name: Deploy to GitHub Pages (Develop)
         if: github.ref == 'refs/heads/develop'
@@ -110,12 +133,3 @@ jobs:
           enable_jekyll: false
           keep_files: false
           allow_empty_commit: false
-
-      - name: Deploy to GitHub Pages (Develop Alternative)
-        if: github.ref == 'refs/heads/develop' && false  # Desabilitado por enquanto
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./gh-pages-develop
-          publish_branch: develop-pages  # Branch separada para develop
-          enable_jekyll: false

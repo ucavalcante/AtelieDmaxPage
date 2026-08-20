@@ -4,7 +4,9 @@
   "description": "Portfolio website for Ateliê Dmax - artesanato em MDF, costura e bordados eletrônicos. Featuring TypeScript/Vue.js architecture with responsive design and auto-image detection.",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report test-results/html-report",
     "build": "node scripts/generate-manifest.js && npx tsc",
     "build:watch": "npx tsc --watch",
     "check": "npx tsc --noEmit",
@@ -28,7 +30,7 @@
     "portfolio",
     "github-pages"
   ],
-  "license": "ISC",
+  "license": "SEE LICENSE IN LICENSE",
   "bugs": {
     "url": "https://github.com/ucavalcante/AtelieDmaxPage/issues"
   },
@@ -37,6 +39,7 @@
     "bootstrap": "^5.3.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@types/node": "^26.1.2",
     "typescript": "^7.0.2"
   }
