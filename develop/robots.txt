@@ -1,0 +1,37 @@
+# robots.txt para Ateliê Dmax
+# Atualizado em 22 de junho de 2025
+
+User-agent: *
+Allow: /
+
+# Permitir crawlers principais
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Bloquear pastas de desenvolvimento e temporárias
+Disallow: /.ai-workspace/
+Disallow: /ts/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.vscode/
+Disallow: /docs/
+
+# Permitir explicitamente arquivos importantes
+Allow: /css/
+Allow: /js/
+Allow: /img/
+Allow: /data/
+Allow: /fonts/
+Allow: /src/
+
+# Crawl-delay para ser respeitoso
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://ateliedmax.com.br/sitemap.xml

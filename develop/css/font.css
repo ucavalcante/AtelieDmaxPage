@@ -1,0 +1,35 @@
+@font-face {
+    font-family: AdineKirnberg;
+    src: url("/fonts/AdineKirnberg/AdineKirnbergRegular-rgX9.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: Elizabeth;
+    src: url(/fonts/Elizabeth/Elizabeth-8Mqy0.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: Cigno;
+    src: url(//fonts/Cigno/Cigno-R0yE.ttf) format('truetype');
+}
+
+
+@font-face {
+    font-family: glametrix;
+    src: url(/fonts/glametrix/Glametrix-oj9A.otf) format('font/otf');
+}
+
+@font-face {
+    font-family: montepetrum;
+    src: url(/fonts/montepetrum/Montepetrum-rrBL.ttf)format('truetype');
+}
+
+@font-face {
+    font-family: quintessential;
+    src: url(/fonts/quintessential/Quintessential-RgGE.ttf)format('truetype');
+}
+
+@font-face {
+    font-family: zt-gatha;
+    src: url(/fonts/zt-gatha/ZtGathaSemiBold-OVaxA.ttf)format('truetype');
+}
