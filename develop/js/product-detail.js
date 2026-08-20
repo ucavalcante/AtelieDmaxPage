@@ -251,7 +251,9 @@ const ProductDetailApp = {
                 window.history.back();
             }
             else {
-                window.location.href = '/';
+                const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+                const prefix = isDevelop ? '/develop/' : '/';
+                window.location.href = prefix;
             }
         };
         const retryLoad = async () => {
