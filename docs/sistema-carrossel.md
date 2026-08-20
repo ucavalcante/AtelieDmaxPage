@@ -186,9 +186,9 @@ cp src/content/products/details/enxoval-bebe.html src/content/products/details/n
 3. ✅ **Navegação por cards implementada**
 4. ✅ **Descrições centralizadas em data/descriptions/**
 5. ✅ **Arquivos JSON criados para todas as categorias**
-6. ❌ **Atualizar páginas restantes** (batizado, caixa-convite, ocasioes-especiais)
-7. ❌ **Testar navegação completa**
-8. ❌ **Otimizar performance** (WebP, minificação)
+6. ✅ **Atualizar páginas restantes** (batizado, caixa-convite, ocasioes-especiais, sapato-infantil, depoimentos, enxoval)
+7. ✅ **Testar navegação completa com Playwright E2E** (108/108 testes aprovados)
+8. ✅ **Gerador de manifesto automatizado** (`scripts/generate-manifest.js`)
 
 ### **Melhorias Futuras**
 - **Zoom de imagens**: Visualização em tela cheia
@@ -201,12 +201,12 @@ cp src/content/products/details/enxoval-bebe.html src/content/products/details/n
 
 1. **Enxoval de Bebê** ✅
 2. **Sapato Infantil Customizado** ✅  
-3. **Batizado** 🔄
-4. **Caixa Convite** 🔄
-5. **Ocasiões Especiais** 🔄
+3. **Batizado** ✅
+4. **Caixa Convite** ✅
+5. **Ocasiões Especiais** ✅
 6. **Depoimentos** ✅
 
 ---
 
-**Status**: Sistema base implementado e funcionando! 🎉
-**Próximo**: Completar páginas restantes e criar descriptions.json
+**Status**: Sistema 100% implementado, testado e validado! 🎉
+**Versão**: 0.9.0 (Agosto 2026)

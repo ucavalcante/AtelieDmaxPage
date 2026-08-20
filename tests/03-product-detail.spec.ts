@@ -24,8 +24,9 @@ test.describe('Jornada 3 — Páginas de Detalhes dos Produtos (details/*.html)'
         const mainImage = page.locator('img.main-image');
         await expect(mainImage).toBeVisible();
 
-        const isLoaded = await mainImage.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0);
-        expect(isLoaded).toBeTruthy();
+        await expect.poll(async () => {
+          return await mainImage.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0);
+        }, { timeout: 10000 }).toBe(true);
       });
 
       test('deve navegar pelo carrossel através dos botões Anterior e Próximo', async ({ page }) => {

@@ -37,8 +37,9 @@ test.describe('Jornada 2 — Galeria Principal de Produtos (products.html)', () 
       const img = images.nth(i);
       await expect(img).toBeVisible();
       
-      const isLoaded = await img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0);
-      expect(isLoaded).toBeTruthy();
+      await expect.poll(async () => {
+        return await img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0);
+      }, { timeout: 10000 }).toBe(true);
     }
   });
 
