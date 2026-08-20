@@ -5,54 +5,119 @@
       "name": "Enxoval de Bebê",
       "description": "Enxovais personalizados com bordados únicos para bebês",
       "folder": "enxoval-bebe",
-      "images": [],
-      "keywords": ["enxoval", "bebê", "bordado", "personalizado", "artesanato em mdf"]
+      "keywords": [
+        "enxoval",
+        "bebê",
+        "bordado",
+        "maternidade",
+        "personalizado"
+      ],
+      "images": [
+        "img001.jpeg",
+        "img002.jpeg",
+        "img003.jpeg",
+        "img004.jpeg"
+      ]
     },
     {
       "id": "sapato-infantil",
       "name": "Sapato Infantil Customizado",
       "description": "Sapatos infantis personalizados com bordados e decorações únicas",
       "folder": "sapato-infantil",
-      "images": [],
-      "keywords": ["sapato infantil", "customizado", "bordado", "personalizado", "criança", "calçado"]
+      "keywords": [
+        "sapato",
+        "infantil",
+        "customizado",
+        "pérola",
+        "bebê",
+        "festa"
+      ],
+      "images": [
+        "img011.jpeg",
+        "img012.jpeg",
+        "img013.jpeg"
+      ]
     },
     {
       "id": "batizado",
       "name": "Batizado",
       "description": "Artigos especiais para cerimônias de batizado",
       "folder": "batizado",
-      "images": [],
-      "keywords": ["batizado", "cerimônia", "religioso", "bordado eletrônico"]
+      "keywords": [
+        "batizado",
+        "vela",
+        "toalha",
+        "lembrancinha",
+        "religioso"
+      ],
+      "images": [
+        "img001.jpeg",
+        "img002.jpeg",
+        "img003.jpeg",
+        "img021.jpeg",
+        "img022.jpeg",
+        "img023.jpeg"
+      ]
     },
     {
       "id": "caixa-convite",
       "name": "Caixa Convite",
       "description": "Convites em caixas personalizadas para ocasiões especiais",
       "folder": "caixa-convite",
-      "images": [],
-      "keywords": ["convites personalizados", "caixa", "casamento", "artesanato"]
+      "keywords": [
+        "caixa",
+        "convite",
+        "padrinhos",
+        "mdf",
+        "casamento",
+        "batizado"
+      ],
+      "images": [
+        "img004.jpeg",
+        "img005.jpeg",
+        "img006.jpeg",
+        "img012.jpeg",
+        "img020.jpeg"
+      ]
     },
     {
       "id": "ocasioes-especiais",
       "name": "Ocasiões Especiais",
-      "description": "Artesanatos únicos para momentos inesquecíveis",
+      "description": "Produtos personalizados para momentos únicos e inesquecíveis",
       "folder": "ocasioes-especiais",
-      "images": [],
-      "keywords": ["ocasião especial", "ateliê artesanal", "personalizado"]
+      "keywords": [
+        "ocasiões",
+        "especiais",
+        "presentes",
+        "mdf",
+        "decoração",
+        "datas"
+      ],
+      "images": [
+        "img007.jpeg",
+        "img008.jpeg",
+        "img009.jpeg",
+        "img010.jpeg"
+      ]
     },
     {
       "id": "depoimentos",
       "name": "Depoimentos",
-      "description": "Avaliações e comentários de nossos queridos clientes",
+      "description": "O que nossos clientes dizem sobre nossos produtos e atendimento",
       "folder": "depoimentos",
-      "images": [],
-      "keywords": ["depoimentos", "avaliações", "clientes", "feedback", "testemunhos"]
+      "keywords": [
+        "depoimentos",
+        "avaliacoes",
+        "clientes",
+        "feedback"
+      ],
+      "images": [
+        "img016.jpeg",
+        "img017.jpeg",
+        "img018.jpeg",
+        "placeholder.jpg"
+      ]
     }
   ],
-  "settings": {
-    "basePath": "/img/products/",
-    "fallbackImage": "/img/products/placeholder.jpg",
-    "lazyLoading": true,
-    "imageFormats": ["webp", "jpeg", "jpg", "png"]
-  }
+  "lastUpdated": "2026-08-20T11:24:16.088Z"
 }

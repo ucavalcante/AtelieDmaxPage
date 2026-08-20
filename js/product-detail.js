@@ -15,9 +15,11 @@ const ProductDetailApp = {
             imageDescriptions: {},
             currentImageIndex: 0
         });
+        const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+        const prefix = isDevelop ? '/develop' : '';
         const settings = {
-            basePath: '/img/products/',
-            fallbackImage: '/img/products/placeholder.jpg',
+            basePath: `${prefix}/img/products/`,
+            fallbackImage: `${prefix}/img/products/placeholder.jpg`,
             lazyLoading: true,
             imageFormats: ['webp', 'jpeg', 'jpg', 'png'],
             autoDetector: null
@@ -57,13 +59,15 @@ const ProductDetailApp = {
         };
         const loadProductData = async (productId) => {
             try {
-                const response = await fetch('/data/products.json');
+                const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+                const prefix = isDevelop ? '/develop' : '';
+                const response = await fetch(`${prefix}/data/products.json`);
                 if (response.ok) {
                     const data = await response.json();
-                    const category = data.categories.find((cat) => cat.id === productId);
+                    const category = data.categories.find((cat) => cat.id === productId || cat.folder === productId);
                     if (category) {
                         state.productData = {
-                            id: category.id,
+                            id: category.id || category.folder,
                             name: category.name,
                             description: category.description,
                             folder: category.folder || category.id
@@ -136,47 +140,12 @@ const ProductDetailApp = {
                         return;
                     }
                 }
-                await loadImagesManually(productId);
+                throw new Error('Nenhuma imagem encontrada para este produto via API ou Diretório');
             }
             catch (error) {
-                console.warn('Erro ao usar auto-detector, tentando carregamento manual:', error);
-                await loadImagesManually(productId);
+                console.error('Erro ao carregar imagens:', error);
+                state.error = error.message || 'Erro ao carregar imagens do produto';
             }
-        };
-        const loadImagesManually = async (productId) => {
-            const commonImageNames = [
-                'img001.jpeg', 'img002.jpeg', 'img003.jpeg', 'img004.jpeg', 'img005.jpeg',
-                'img006.jpeg', 'img007.jpeg', 'img008.jpeg', 'img009.jpeg', 'img010.jpeg',
-                'img011.jpeg', 'img012.jpeg', 'img013.jpeg', 'img014.jpeg', 'img015.jpeg',
-                'img016.jpeg', 'img017.jpeg', 'img018.jpeg', 'img019.jpeg', 'img020.jpeg',
-                'img021.jpeg', 'img022.jpeg', 'img023.jpeg', 'img024.jpeg', 'img025.jpeg'
-            ];
-            const validImages = [];
-            const folder = state.productData.folder;
-            for (const imageName of commonImageNames) {
-                const imageUrl = `${settings.basePath}${folder}/${imageName}`;
-                try {
-                    const exists = await checkImageExists(imageUrl);
-                    if (exists) {
-                        validImages.push(imageName);
-                    }
-                }
-                catch (error) {
-                }
-            }
-            if (validImages.length === 0) {
-                throw new Error('Nenhuma imagem encontrada para este produto');
-            }
-            state.images = validImages;
-            console.log(`✅ ${validImages.length} imagens carregadas manualmente para ${productId}`);
-        };
-        const checkImageExists = (imageUrl) => {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = () => resolve(true);
-                img.onerror = () => resolve(false);
-                img.src = imageUrl;
-            });
         };
         const loadImageDescriptions = async (productId) => {
             try {
@@ -282,7 +251,9 @@ const ProductDetailApp = {
                 window.history.back();
             }
             else {
-                window.location.href = '/';
+                const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+                const prefix = isDevelop ? '/develop/' : '/';
+                window.location.href = prefix;
             }
         };
         const retryLoad = async () => {

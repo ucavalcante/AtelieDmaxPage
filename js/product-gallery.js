@@ -1,14 +1,18 @@
 "use strict";
-const ProductGalleryVue3 = {
+var ProductGalleryVue3 = {
     setup() {
         const state = Vue.reactive({
             categories: [],
-            settings: {
-                basePath: '/img/products/',
-                fallbackImage: '/img/products/placeholder.jpg',
-                lazyLoading: true,
-                imageFormats: ['webp', 'jpeg', 'jpg', 'png']
-            },
+            settings: (() => {
+                const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+                const prefix = isDevelop ? '/develop' : '';
+                return {
+                    basePath: `${prefix}/img/products/`,
+                    fallbackImage: `${prefix}/img/products/placeholder.jpg`,
+                    lazyLoading: true,
+                    imageFormats: ['webp', 'jpeg', 'jpg', 'png']
+                };
+            })(),
             loading: true,
             error: null,
             currentImageIndexes: {},
@@ -160,7 +164,9 @@ const ProductGalleryVue3 = {
         const navigateToCategory = (categoryId) => {
             const category = state.categories.find((cat) => cat.id === categoryId);
             if (category) {
-                const detailsUrl = `/src/content/products/details/${categoryId}.html`;
+                const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+                const prefix = isDevelop ? '/develop' : '';
+                const detailsUrl = `${prefix}/src/content/products/details/${categoryId}.html`;
                 window.location.href = detailsUrl;
             }
         };
