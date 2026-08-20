@@ -14,6 +14,7 @@ interface CategoryConfig {
   name: string;
   description: string;
   keywords: string[];
+  images?: string[];
 }
 
 interface DetectedCategory {
@@ -25,11 +26,6 @@ interface DetectedCategory {
   keywords: string[];
 }
 
-interface NamingPattern {
-  name: string;
-  generator: (i: number) => string;
-  maxTest?: number;
-}
 
 interface DetectionStats {
   totalCategories: number;
@@ -48,15 +44,14 @@ interface DetectionStats {
  */
 class AutoImageDetector {
   private basePath: string;
-  private maxRetries: number;
-  private timeoutMs: number;
   private knownCategories: CategoryConfig[];
   private categoriesLoaded: boolean = false;
 
   constructor() {
-    this.basePath = '/img/products/';
-    this.maxRetries = 20;
-    this.timeoutMs = 1500;
+    const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+    const prefix = isDevelop ? '/develop' : '';
+    
+    this.basePath = `${prefix}/img/products/`;
     
     // Fallback hardcoded - usado apenas se products.json falhar
     this.knownCategories = this.getDefaultCategories();
@@ -65,12 +60,14 @@ class AutoImageDetector {
   /**
    * Carrega categorias do products.json primeiro, fallback para hardcoded
    */
-  private async loadCategoriesFromJson(): Promise<void> {
+  public async loadCategoriesFromJson(): Promise<void> {
     if (this.categoriesLoaded) return;
 
     try {
       console.log('Tentando carregar categorias do products.json...');
-      const response = await fetch('/data/products.json');
+      const isDevelop = typeof window !== 'undefined' && window.location.pathname.includes('/develop');
+      const jsonUrl = isDevelop ? '/develop/data/products.json' : '/data/products.json';
+      const response = await fetch(jsonUrl);
       
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -83,7 +80,8 @@ class AutoImageDetector {
           folder: cat.id || cat.folder,
           name: cat.name,
           description: cat.description,
-          keywords: cat.keywords || []
+          keywords: cat.keywords || [],
+          images: cat.images || []
         }));
         
         console.log(`✅ ${this.knownCategories.length} categorias carregadas do JSON`);
@@ -179,120 +177,112 @@ class AutoImageDetector {
   }
 
   /**
-   * Detecta imagens em uma categoria específica
+   * Adaptador para compatibilidade com a página de detalhes do produto (product-detail.ts)
+   */
+  async detectImagesForCategory(folderName: string): Promise<DetectedCategory | null> {
+    await this.loadCategoriesFromJson();
+    
+    const config = this.knownCategories.find(c => c.folder === folderName || c.folder === folderName.toLowerCase());
+    const images = await this.detectImagesInCategory(folderName);
+    
+    if (images.length === 0) return null;
+
+    return {
+      id: folderName,
+      name: config ? config.name : folderName,
+      description: config ? config.description : '',
+      folder: folderName,
+      images: images,
+      keywords: config ? config.keywords : []
+    };
+  }
+
+  /**
+   * Detecta imagens em uma categoria específica via Directory Listing ou GitHub API
    */
   async detectImagesInCategory(folderName: string): Promise<string[]> {
     console.log(`Analisando pasta: ${folderName}`);
     
-    const patterns = this.getImagePatterns();
-    
-    for (const pattern of patterns) {
-      console.log(`Testando padrão: ${pattern.name}`);
-      const images = await this.testImagePattern(folderName, pattern);
-      
-      if (images.length > 0) {
-        console.log(`Padrão ${pattern.name} encontrou ${images.length} imagens`);
-        return images;
-      }
+    // Ler a lista real de arquivos via Directory Listing (local) ou GitHub API (online)
+    const listedImages = await this.detectImagesFromDirectoryListing(folderName);
+    if (listedImages.length > 0) {
+      console.log(`✅ Directory Listing/API encontrou ${listedImages.length} imagens em ${folderName}`);
+      return listedImages;
     }
-    
-    console.log(`Nenhum padrão funcionou para ${folderName}`);
+
+    console.log(`Nenhuma imagem listada pela API/Diretório para ${folderName}`);
     return [];
   }
 
   /**
-   * Define padrões de nomenclatura
+   * Lê a lista real de imagens enviando um fetch para a pasta (products.json, GitHub API ou Directory Index)
    */
-  private getImagePatterns(): NamingPattern[] {
-    return [
-      {
-        name: 'img001-999.jpeg',
-        generator: (i: number) => `img${String(i).padStart(3, '0')}.jpeg`
-      },
-      {
-        name: 'img001-999.jpg', 
-        generator: (i: number) => `img${String(i).padStart(3, '0')}.jpg`
-      },
-      {
-        name: 'img1-99.jpeg',
-        generator: (i: number) => `img${i}.jpeg`
-      },
-      {
-        name: 'img1-99.jpg',
-        generator: (i: number) => `img${i}.jpg`
-      },
-      {
-        name: 'image1-99.jpeg',
-        generator: (i: number) => `image${i}.jpeg`
-      },
-      {
-        name: 'image1-99.jpg',
-        generator: (i: number) => `image${i}.jpg`
-      },
-      {
-        name: 'produto1-99.jpeg',
-        generator: (i: number) => `produto${i}.jpeg`
-      },
-      {
-        name: 'produto1-99.jpg',
-        generator: (i: number) => `produto${i}.jpg`
-      }
-    ];
-  }
+  private async detectImagesFromDirectoryListing(folderName: string): Promise<string[]> {
+    // 1. Tentar ler as imagens da categoria diretamente do manifesto products.json (carregado dinamicamente no build)
+    const jsonCategory = this.knownCategories.find((c: any) => c.folder === folderName || c.folder === folderName.toLowerCase());
+    if (jsonCategory && Array.isArray((jsonCategory as any).images) && (jsonCategory as any).images.length > 0) {
+      console.log(`✅ products.json retornou ${(jsonCategory as any).images.length} imagens para ${folderName}`);
+      return (jsonCategory as any).images;
+    }
 
-  /**
-   * Testa um padrão específico de nomenclatura
-   */
-  private async testImagePattern(folderName: string, pattern: NamingPattern): Promise<string[]> {
-    const foundImages: string[] = [];
-    let consecutiveMisses = 0;
-    const maxConsecutiveMisses = 3;
-    
-    console.log(`Testando até ${this.maxRetries} imagens com padrão ${pattern.name}...`);
-    
-    for (let i = 1; i <= this.maxRetries; i++) {
-      const imageName = pattern.generator(i);
-      const imagePath = `${this.basePath}${folderName}/${imageName}`;
+    // 2. Tentar obter via GitHub Contents API (para GitHub Pages online)
+    const githubApiImages = await this.detectImagesFromGitHubAPI(folderName);
+    if (githubApiImages.length > 0) {
+      console.log(`✅ GitHub Contents API retornou ${githubApiImages.length} imagens para ${folderName}`);
+      return githubApiImages;
+    }
+
+    // 2. Tentar obter via Directory Listing HTML (para servidor de dev local)
+    const folderUrl = `${this.basePath}${folderName}/`;
+    try {
+      const response = await fetch(folderUrl);
+      if (!response.ok) return [];
       
-      if (await this.imageExists(imagePath)) {
-        foundImages.push(imageName);
-        consecutiveMisses = 0;
-        console.log(`Encontrada: ${imageName}`);
-      } else {
-        consecutiveMisses++;
-        
-        if (foundImages.length > 0 && consecutiveMisses >= maxConsecutiveMisses) {
-          console.log(`Parando busca após ${consecutiveMisses} falhas consecutivas`);
-          break;
+      const html = await response.text();
+      // Extrair todos os links de imagens (.jpeg, .jpg, .png, .webp) da listagem de diretório
+      const imgRegex = /href=["']([^"']+\.(?:jpeg|jpg|png|webp))["']/gi;
+      const foundFiles: Set<string> = new Set();
+      let match;
+      
+      while ((match = imgRegex.exec(html)) !== null) {
+        const fullPath = match[1];
+        const filename = fullPath.split('/').pop();
+        if (filename && !filename.startsWith('.')) {
+          foundFiles.add(filename);
         }
       }
+      
+      return Array.from(foundFiles);
+    } catch (e) {
+      console.warn(`Directory listing não disponível para ${folderName}:`, e);
+      return [];
     }
-    
-    return foundImages;
   }
 
   /**
-   * Verifica se uma imagem existe
+   * Consulta a API REST pública do GitHub em tempo real para obter arquivos da pasta
    */
-  private async imageExists(imagePath: string): Promise<boolean> {
-    return new Promise((resolve) => {
-      const img = new Image();
-      const timeoutId = setTimeout(() => {
-        resolve(false);
-      }, this.timeoutMs);
+  private async detectImagesFromGitHubAPI(folderName: string): Promise<string[]> {
+    // Detectar a branch ativa a partir da URL (develop vs master)
+    const isDevelop = window.location.pathname.includes('/develop');
+    const ref = isDevelop ? 'develop' : 'master';
+    const apiUrl = `https://api.github.com/repos/ucavalcante/AtelieDmaxPage/contents/img/products/${folderName}?ref=${ref}`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) return [];
       
-      img.onload = () => {
-        clearTimeout(timeoutId);
-        resolve(true);
-      };
-      
-      img.onerror = () => {
-        clearTimeout(timeoutId);
-        resolve(false);
-      };
-      
-      img.src = imagePath;
-    });
+      const items = await response.json();
+      if (!Array.isArray(items)) return [];
+
+      const imageExtensions = ['.jpeg', '.jpg', '.png', '.webp'];
+      return items
+        .filter((item: any) => item.type === 'file' && imageExtensions.some(ext => item.name.toLowerCase().endsWith(ext)))
+        .map((item: any) => item.name);
+    } catch (e) {
+      console.warn(`GitHub API indisponível para ${folderName}:`, e);
+      return [];
+    }
   }
 
   /**

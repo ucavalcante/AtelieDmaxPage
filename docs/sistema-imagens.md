@@ -174,15 +174,14 @@ Edite `products.css` para personalizar:
 2. Veja erros no console do navegador
 3. Confirme se `products.json` é válido
 
-## 📈 Próximas Melhorias
-
-- [ ] **Auto-detecção** de imagens via API
-- [ ] **Compressão automática** de imagens
-- [ ] **Cache inteligente** do navegador
-- [ ] **PWA** para funcionamento offline
-- [ ] **Busca e filtros** avançados
+## 🛠️ Recursos Implementados
+- ✅ **Manifesto Automatizado**: `scripts/generate-manifest.js` varre e mapeia as imagens no build
+- ✅ **Carregamento Dinâmico**: Componentes Vue 3 renderizam imagens e carrosséis com dados tipados
+- ✅ **Sistema de Fallback**: Imagem padrão `placeholder.jpg` para prevenção de falhas
+- ✅ **Zero Erros 404**: Mapeamento preciso de imagens eliminando requisições cegas
+- ✅ **Testes Automatizados**: Suíte Playwright E2E em TypeScript cobrindo 108 cenários
 
 ---
 
-**Última atualização:** 22 de junho de 2025
-**Versão:** 1.0.0
+**Última atualização:** 20 de agosto de 2026  
+**Versão:** 0.9.0  

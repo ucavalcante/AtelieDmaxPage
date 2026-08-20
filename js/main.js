@@ -3,6 +3,7 @@ class MainNavigationController {
     constructor() {
         this.productObject = null;
         this.vueApp = null;
+        this.vueState = null;
         this.init();
     }
     init() {
@@ -20,8 +21,8 @@ class MainNavigationController {
         if (options.analytics !== false && window.clarity) {
             window.clarity.event('navigation_about_clicked');
         }
-        if (this.vueApp) {
-            this.vueApp.currentPage = 'about';
+        if (this.vueState) {
+            this.vueState.currentPage = 'about';
         }
     }
     loadProducts(options = {}) {
@@ -33,8 +34,8 @@ class MainNavigationController {
         if (options.analytics !== false && window.clarity) {
             window.clarity.event('navigation_products_clicked');
         }
-        if (this.vueApp) {
-            this.vueApp.currentPage = 'products';
+        if (this.vueState) {
+            this.vueState.currentPage = 'products';
         }
     }
     setupEventListeners() {
@@ -95,19 +96,19 @@ class MainNavigationController {
             console.warn('⚠️ Vue.js não encontrado! Navegação funcionará sem Vue.');
             return;
         }
-        this.vueApp = new window.Vue({
-            data: {
-                currentPage: 'products'
-            },
-            methods: {
-                navigateToAbout: () => {
-                    this.loadAboutPage();
-                },
-                navigateToProducts: () => {
-                    this.loadProducts();
-                }
+        const { createApp, reactive } = window.Vue;
+        this.vueState = reactive({ currentPage: 'products' });
+        const state = this.vueState;
+        const self = this;
+        this.vueApp = createApp({
+            setup() {
+                return {
+                    state,
+                    navigateToAbout: () => self.loadAboutPage(),
+                    navigateToProducts: () => self.loadProducts()
+                };
             }
-        }).$mount('#content');
+        }).mount('#content');
     }
     isValidNavigationEvent(data) {
         return data &&
