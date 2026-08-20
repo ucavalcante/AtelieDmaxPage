@@ -25,7 +25,8 @@ class AutoImageDetector {
                     folder: cat.id || cat.folder,
                     name: cat.name,
                     description: cat.description,
-                    keywords: cat.keywords || []
+                    keywords: cat.keywords || [],
+                    images: cat.images || []
                 }));
                 console.log(`✅ ${this.knownCategories.length} categorias carregadas do JSON`);
                 this.categoriesLoaded = true;

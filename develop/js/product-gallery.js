@@ -1,5 +1,5 @@
 "use strict";
-const ProductGalleryVue3 = {
+var ProductGalleryVue3 = {
     setup() {
         const state = Vue.reactive({
             categories: [],
