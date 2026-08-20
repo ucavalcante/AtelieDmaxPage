@@ -1,6 +1,6 @@
 {
   "name": "ateliedmaxpage",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "Portfolio website for Ateliê Dmax - artesanato em MDF, costura e bordados eletrônicos. Featuring TypeScript/Vue.js architecture with responsive design and auto-image detection.",
   "main": "index.html",
   "scripts": {
